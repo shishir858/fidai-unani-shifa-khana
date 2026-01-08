@@ -2,14 +2,48 @@
 require_once '../includes/config.php';
 require_once '../includes/functions.php';
 check_login();
-
-$page_title = 'Add Category';
 $error = '';
-$success = '';
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
-    // Check if name already exists
+    $image = '';
+    // Handle image upload
+    if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $target_dir = '../assets/images/categories/';
+        if(!is_dir($target_dir)) { mkdir($target_dir, 0777, true); }
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','gif','webp'];
+        if(in_array($ext, $allowed)) {
+            $img_name = uniqid('cat_', true) . '.' . $ext;
+            $target_file = $target_dir . $img_name;
+            if(move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                $image = $img_name;
+            }
+        }
+    }
+    $check_query = "SELECT id FROM categories WHERE name = '$name'";
+    $check_result = mysqli_query($conn, $check_query);
+    if(mysqli_num_rows($check_result) > 0) {
+        $error = 'Category name already exists. Please use a different name.';
+    } else {
+        $query = "INSERT INTO categories (name, image) VALUES ('$name', '$image')";
+        if(mysqli_query($conn, $query)) {
+            header('Location: index.php?msg=added');
+            exit;
+        } else {
+            $error = 'Error adding category: ' . mysqli_error($conn);
+        }
+    }
+}
+include '../includes/header.php';
+include '../includes/sidebar.php';
+?>
+
+<?php
+
+
+$error = '';
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
     $check_query = "SELECT id FROM categories WHERE name = '$name'";
     $check_result = mysqli_query($conn, $check_query);
     if(mysqli_num_rows($check_result) > 0) {
@@ -24,74 +58,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-
 include '../includes/header.php';
 include '../includes/sidebar.php';
 ?>
-
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h1><i class="fas fa-plus-circle"></i> Add Category</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>dashboard.php">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="index.php">Categories</a></li>
-                    <li class="breadcrumb-item active">Add</li>
-                </ol>
-            </nav>
+<div class="container mt-4">
+    <h2>Add Category</h2>
+    <?php if($error): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
-        <a href="index.php" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
-    </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Category Image</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Category</button>
+        <a href="index.php" class="btn btn-secondary">Cancel</a>
+    </form>
 </div>
-
-<?php if($error): ?>
-    <?php echo error_message($error); ?>
-<?php endif; ?>
-
-<div class="row">
-    <div class="col-lg-8">
-        <div class="admin-card">
-            <h2>Category Information</h2>
-            
-            <form method="POST" action="">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Category Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" required 
-                           placeholder="e.g., Golden Triangle Tours"
-                           value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>">
-                    <small class="text-muted">Main category name displayed on website</small>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="slug" name="slug" 
-                           placeholder="e.g., golden-triangle-tours (auto-generated if left empty)"
-                           value="<?php echo isset($_POST['slug']) ? $_POST['slug'] : ''; ?>">
-                    <small class="text-muted">URL-friendly version (lowercase, hyphens only). Leave empty to auto-generate.</small>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" 
-                              placeholder="Brief description of this category"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
-                    <small class="text-muted">Short description for SEO and display purposes</small>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="icon" class="form-label">Icon (Font Awesome)</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i id="iconPreview" class="fas fa-folder"></i>
-                            </span>
-                            <input type="text" class="form-control" id="icon" name="icon" 
-                                   placeholder="e.g., fas fa-mountain"
-                                   value="<?php echo isset($_POST['icon']) ? $_POST['icon'] : ''; ?>">
-                        </div>
-                        <small class="text-muted">
+<?php include '../includes/footer.php'; ?>
                             <a href="https://fontawesome.com/icons" target="_blank">Browse icons</a>
                         </small>
                     </div>

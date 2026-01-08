@@ -2,57 +2,43 @@
 require_once '../includes/config.php';
 require_once '../includes/functions.php';
 check_login();
-
-$page_title = 'Edit Category';
 $error = '';
-
-// Get category ID
 if(!isset($_GET['id'])) {
     header('Location: index.php');
     exit;
 }
-
 $id = intval($_GET['id']);
-
-// Get category data
-$query = "SELECT * FROM categories WHERE id = $id";
+$query = "SELECT id, name, image FROM categories WHERE id = $id";
 $result = mysqli_query($conn, $query);
-
 if(mysqli_num_rows($result) == 0) {
     header('Location: index.php');
     exit;
 }
-
 $category = mysqli_fetch_assoc($result);
-
-// Handle form submission
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $slug = generate_slug($_POST['slug'] ?: $_POST['name']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $icon = mysqli_real_escape_string($conn, $_POST['icon']);
-    $display_order = intval($_POST['display_order']);
-    $is_active = isset($_POST['is_active']) ? 1 : 0;
-    $show_in_header = isset($_POST['show_in_header']) ? 1 : 0;
-    
-    // Check if slug already exists (excluding current category)
-    $check_query = "SELECT id FROM categories WHERE slug = '$slug' AND id != $id";
+    $image = $category['image'];
+    // Handle image upload
+    if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $target_dir = '../assets/images/categories/';
+        if(!is_dir($target_dir)) { mkdir($target_dir, 0777, true); }
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','gif','webp'];
+        if(in_array($ext, $allowed)) {
+            $img_name = uniqid('cat_', true) . '.' . $ext;
+            $target_file = $target_dir . $img_name;
+            if(move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
+                $image = $img_name;
+            }
+        }
+    }
+    $check_query = "SELECT id FROM categories WHERE name = '$name' AND id != $id";
     $check_result = mysqli_query($conn, $check_query);
-    
     if(mysqli_num_rows($check_result) > 0) {
-        $error = 'Slug already exists. Please use a different name or slug.';
+        $error = 'Category name already exists. Please use a different name.';
     } else {
-        $update_query = "UPDATE categories SET 
-                         name = '$name',
-                         slug = '$slug',
-                         description = '$description',
-                         icon = '$icon',
-                         display_order = $display_order,
-                         is_active = $is_active,
-                         show_in_header = $show_in_header
-                         WHERE id = $id";
-        
-        if(mysqli_query($conn, $update_query)) {
+        $query = "UPDATE categories SET name = '$name', image = '$image' WHERE id = $id";
+        if(mysqli_query($conn, $query)) {
             header('Location: index.php?msg=updated');
             exit;
         } else {
@@ -60,6 +46,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+include '../includes/header.php';
+include '../includes/sidebar.php';
+?>
+
+<style>
+    .admin-content {
+        margin-left: 20%!important;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2>Edit Category</h2>
+    <?php if($error): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($category['name']); ?>" required>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Category Image</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            <?php if(!empty($category['image'])): ?>
+                <div class="mt-2">
+                    <img src="../assets/images/categories/<?php echo $category['image']; ?>" alt="Category Image" style="max-width:120px;max-height:80px;">
+                </div>
+            <?php endif; ?>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Category</button>
+        <a href="index.php" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+<?php include '../includes/footer.php'; ?>
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     // Check if name already exists (excluding current category)
     $check_query = "SELECT id FROM categories WHERE name = '$name' AND id != $id";
@@ -75,70 +95,57 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = 'Error updating category: ' . mysqli_error($conn);
         }
     }
-
+<?php
+require_once '../includes/config.php';
+require_once '../includes/functions.php';
+check_login();
+$error = '';
+if(!isset($_GET['id'])) {
+    header('Location: index.php');
+    exit;
+}
+$id = intval($_GET['id']);
+$query = "SELECT id, name FROM categories WHERE id = $id";
+$result = mysqli_query($conn, $query);
+if(mysqli_num_rows($result) == 0) {
+    header('Location: index.php');
+    exit;
+}
+$category = mysqli_fetch_assoc($result);
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $check_query = "SELECT id FROM categories WHERE name = '$name' AND id != $id";
+    $check_result = mysqli_query($conn, $check_query);
+    if(mysqli_num_rows($check_result) > 0) {
+        $error = 'Category name already exists. Please use a different name.';
+    } else {
+        $query = "UPDATE categories SET name = '$name' WHERE id = $id";
+        if(mysqli_query($conn, $query)) {
+            header('Location: index.php?msg=updated');
+            exit;
+        } else {
+            $error = 'Error updating category: ' . mysqli_error($conn);
+        }
+    }
+}
 include '../includes/header.php';
 include '../includes/sidebar.php';
 ?>
-
-<div class="page-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h1><i class="fas fa-edit"></i> Edit Category</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>dashboard.php">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="index.php">Categories</a></li>
-                    <li class="breadcrumb-item active">Edit</li>
-                </ol>
-            </nav>
+<div class="container mt-4">
+    <h2>Edit Category</h2>
+    <?php if($error): ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+    <form method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($category['name']); ?>" required>
         </div>
-        <a href="index.php" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
-    </div>
+        <button type="submit" class="btn btn-primary">Update Category</button>
+        <a href="index.php" class="btn btn-secondary">Cancel</a>
+    </form>
 </div>
-
-<?php if($error): ?>
-    <?php echo error_message($error); ?>
-<?php endif; ?>
-
-<div class="row">
-    <div class="col-lg-8">
-        <div class="admin-card">
-            <h2>Category Information</h2>
-            
-            <form method="POST" action="">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Category Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" required 
-                           value="<?php echo $category['name']; ?>">
-                </div>
-                
-                <div class="mb-3">
-                    <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="slug" name="slug" 
-                           value="<?php echo $category['slug']; ?>">
-                    <small class="text-muted">URL-friendly version (lowercase, hyphens only)</small>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"><?php echo $category['description']; ?></textarea>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="icon" class="form-label">Icon (Font Awesome)</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i id="iconPreview" class="<?php echo $category['icon'] ?: 'fas fa-folder'; ?>"></i>
-                            </span>
-                            <input type="text" class="form-control" id="icon" name="icon" 
-                                   value="<?php echo $category['icon']; ?>">
-                        </div>
-                        <small class="text-muted">
-                            <a href="https://fontawesome.com/icons" target="_blank">Browse icons</a>
-                        </small>
+<?php include '../includes/footer.php'; ?>
                     </div>
                     
                     <div class="col-md-6 mb-3">
