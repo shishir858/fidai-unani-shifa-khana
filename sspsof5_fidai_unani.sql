@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2026 at 11:39 AM
+-- Generation Time: Jan 09, 2026 at 12:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$wH6Qw6Qw6Qw6Qw6Qw6Qw6uQw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6');
+(1, 'admin', '$2y$10$1MYh6zgTs/UsDusfCeDnxOxZq9e/zsjfZUTDwPl6Ftbomm1NCvxnq');
 
 -- --------------------------------------------------------
 
@@ -55,14 +55,6 @@ CREATE TABLE `appointments` (
   `treatment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `appointments`
---
-
-INSERT INTO `appointments` (`id`, `patient_name`, `phone`, `date`, `time`, `treatment_id`) VALUES
-(1, 'Abdul Rahman', '9876543210', '2026-01-10', '10:00:00', 2),
-(2, 'Sana Khan', '9123456780', '2026-01-12', '11:30:00', 5);
-
 -- --------------------------------------------------------
 
 --
@@ -71,22 +63,23 @@ INSERT INTO `appointments` (`id`, `patient_name`, `phone`, `date`, `time`, `trea
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Cancer'),
-(2, 'Liver'),
-(3, 'Kidney'),
-(4, 'Heart'),
-(5, 'Gastro'),
-(6, 'Piles'),
-(7, 'Sexual'),
-(8, 'Allergy');
+INSERT INTO `categories` (`id`, `name`, `image`) VALUES
+(2, 'Liver', NULL),
+(3, 'Kidney', NULL),
+(4, 'Heart', NULL),
+(5, 'Gastro', NULL),
+(6, 'Piles', NULL),
+(7, 'Sexual', NULL),
+(8, 'Allergy', NULL),
+(10, 'cancer', 'cat_695f9692711454.53691067.jpeg');
 
 -- --------------------------------------------------------
 
@@ -203,28 +196,24 @@ CREATE TABLE `treatments` (
   `meta_description` text DEFAULT NULL,
   `meta_keywords` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `features` text DEFAULT NULL,
+  `care_plans` text DEFAULT NULL,
+  `core_values` text DEFAULT NULL,
+  `health_tips` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
--- Add new fields for key features, care plans, core values, health tips
-ALTER TABLE `treatments`
-  ADD COLUMN `features` TEXT DEFAULT NULL,
-  ADD COLUMN `care_plans` TEXT DEFAULT NULL,
-  ADD COLUMN `core_values` TEXT DEFAULT NULL,
-  ADD COLUMN `health_tips` TEXT DEFAULT NULL;
 
 --
 -- Dumping data for table `treatments`
 --
 
-INSERT INTO `treatments` (`id`, `title`, `slug`, `short_description`, `full_description`, `symptoms`, `causes`, `procedure`, `medicines`, `duration`, `side_effects`, `precautions`, `doctor_name`, `related_treatments`, `status`, `feature_image`, `meta_title`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`) VALUES
-(1, 'Cancer Treatment', '', 'Unani supportive care for cancer.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Liver Disease Treatment', '', 'Safe Unani treatment for liver diseases.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'Kidney Disease Treatment', '', 'Unani care for kidney function improvement.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'Heart & Blood Disorders', '', 'Unani solutions for heart and blood pressure.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 'Gastro & Digestive Diseases', '', 'Natural Unani remedies for digestive issues.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'Piles (Bawasir) Treatment', '', 'Unani cure for piles without surgery.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(7, 'Sexual & Infertility Treatment', '', 'Unani solutions for infertility and sexual health.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'Allergy & Asthma', '', 'Unani herbal care for allergies and asthma.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `treatments` (`id`, `title`, `slug`, `short_description`, `full_description`, `symptoms`, `causes`, `procedure`, `medicines`, `duration`, `side_effects`, `precautions`, `doctor_name`, `related_treatments`, `status`, `feature_image`, `meta_title`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`, `features`, `care_plans`, `core_values`, `health_tips`) VALUES
+(10, 'Cancer Treatment (Unani Supportive Care)', 'cancer-treatment-unani-supportive-care', 'Unani supportive care for cancer focuses on improving immunity, reducing treatment-related side effects, and enhancing overall quality of life through natural and holistic therapies.', 'Unani medicine plays a supportive role in cancer care by helping the body cope better with the physical and emotional challenges of the disease. Herbal formulations and lifestyle guidance help manage fatigue, digestive issues, weakness, and stress, especially during chemotherapy and radiotherapy. This approach complements conventional treatment while promoting internal balance and well-being.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Herbal immunity boosters\nReduction in chemotherapy side effects\nImproved strength and stamina\nHolistic and natural care\nFocus on quality of life', 'Lung Cancer\nLiver Cancer\nGall Bladder Cancer', 'Personalized care\nNatural healing methods\nHolistic approach\nEthical and safe practices', '[{\"question\":\"Can liver diseases be treated naturally?\",\"answer\":\"Unani medicine helps improve liver function and supports natural detoxification.\"},{\"question\":\"How long does Unani treatment take for liver issues?\",\"answer\":\"Treatment duration depends on the severity and patient lifestyle.\"}]'),
+(11, 'Liver Disease Treatment', 'liver-disease-treatment', 'Unani treatment for liver diseases helps detoxify the liver, improve digestion, and restore normal liver function using herbal medicines.', 'The liver plays a vital role in digestion and detoxification. Unani medicine addresses liver disorders by correcting internal imbalances and strengthening liver function. Natural herbs help in conditions like fatty liver, hepatitis, and liver weakness, supporting long-term liver health.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Liver detoxification\nImproved digestion\nHerbal formulations\nHolistic healing', 'Fatty Liver\nHepatitis\nLiver Weakness', '', '[{\"question\":\"\",\"answer\":\"A balanced diet and timely treatment help maintain liver health naturally.\"}]'),
+(12, 'Kidney Disease Treatment', 'kidney-disease-treatment', 'Unani medicine supports kidney health by improving filtration, reducing inflammation, and maintaining fluid balance naturally.', 'Unani treatment for kidney diseases focuses on strengthening kidney function and reducing stress on the urinary system. Herbal remedies help manage swelling, fatigue, and urinary issues while supporting overall kidney health.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Supports kidney function\nReduces inflammation\nNatural diuretics\nPersonalized care', 'Chronic Kidney Disease\nKidney Weakness\nUrinary Disorders', '', '[{\"question\":\"Can Unani treatment cure kidney disease?\",\"answer\":\"Unani medicine helps slow progression and improve kidney function in early stages.\"},{\"question\":\"Is dialysis avoidable with Unani treatment?\",\"answer\":\"In early or mild cases, Unani care may help delay complications.\"}]'),
+(13, 'Heart & Blood Disorders Treatment', 'heart-blood-disorders-treatment', 'Unani medicine helps maintain heart health and proper blood circulation through natural therapies and lifestyle balance.', 'Heart and blood disorders are often linked to lifestyle and dietary habits. Unani treatment strengthens the heart, improves circulation, and supports healthy blood levels using herbal medicines and holistic principles.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Improves blood circulation\nSupports heart strength\nHelps manage blood pressure\nNatural and holistic care', 'Hypertension\nCholesterol Imbalance\nGeneral Heart Weakness', '', ''),
+(14, 'Gastro & Digestive Diseases Treatment', 'gastro-digestive-diseases-treatment', 'Unani treatment helps improve digestion, relieve stomach issues, and restore gut balance naturally.', 'Digestive health is central to overall well-being. Unani medicine treats digestive disorders by strengthening digestion, improving metabolism, and correcting internal imbalance through herbal remedies.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Improves digestion\nRelieves acidity and gas\nStrengthens metabolism\nNatural herbal care', 'Acidity\nIndigestion\nIBS\nConstipation', '', ''),
+(15, 'Piles (Bawasir) Treatment', 'piles-bawasir-treatment', 'Unani medicine provides natural relief from piles by reducing pain, swelling, and bleeding.', 'Unani treatment for piles focuses on improving digestion, softening stools, and reducing inflammation. Herbal medicines help manage symptoms without surgical intervention in many cases.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Reduces pain and swelling\nControls bleeding\nImproves bowel movement\nNon-surgical approach', 'Internal Piles\nExternal Piles\nChronic Constipation', '', '');
 
 -- --------------------------------------------------------
 
@@ -320,7 +309,7 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -344,7 +333,7 @@ ALTER TABLE `gallery`
 -- AUTO_INCREMENT for table `treatments`
 --
 ALTER TABLE `treatments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `treatment_gallery`
