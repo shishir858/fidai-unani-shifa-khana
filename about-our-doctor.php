@@ -33,9 +33,9 @@
               <h2 class="text-block__title mb-3">Meet Our Doctor</h2>
               <h4 class="mb-2">Hakeem Shan-e-Alam, BUMS</h4>
               <p class="text-block__desc mb-2 font-weight-bold color-secondary">Unani Medicine Specialist</p>
-              <p class="text-block__desc mb-3"><strong>Clinic Address:</strong> Ravlee Raoad chungi number-3, police chauki ke samne, Muradnagar, Ghaziabad, Uttar Pradesh</p>
+              <p class="text-block__desc mb-3"><strong>Clinic Address:</strong> Rawli Road Chungi no.3 Near by Police Chauki Muradagar, Ghaziabad Uttar Pradesh 201206</p>
               <p class="text-block__desc mb-3"><strong>Contact:</strong> 9634430627 / 9568304355</p>
-              <p class="text-block__desc mb-3"><strong>Timings:</strong> 10:00 am to 2:30 pm, 5:00 pm to 6:00 pm | <strong>Saturday Closed</strong></p>
+              <p class="text-block__desc mb-3"><strong>Timings:</strong> 10:30 am to 2:30 pm, 5:00 pm to 6:00 pm | <strong>Saturday Closed</strong></p>
               <p class="text-block__desc mb-3">Expert in treating cancer, liver, kidney, sexual, gastro, heart, infertility, allergies, asthma, and more using Unani medicine. Providing care for chronic and acute diseases with a holistic approach.</p>
               <ul class="list-items list-items-layout2 list-unstyled mb-0">
                 <li><strong>Cancer:</strong> lungs, gal bladder, liver, etc.</li>

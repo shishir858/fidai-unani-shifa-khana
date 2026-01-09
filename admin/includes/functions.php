@@ -1,7 +1,24 @@
 <?php
-/**
- * Common Functions for Admin Panel
- */
+// Show success message
+function success_message($message) {
+    return '<div class="alert alert-success alert-dismissible fade show" role="alert">'
+        . '<i class="fas fa-check-circle"></i> ' . $message .
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' .
+        '</div>';
+}
+// Show error message
+function error_message($message) {
+    return '<div class="alert alert-danger alert-dismissible fade show" role="alert">'
+        . '<i class="fas fa-exclamation-circle"></i> ' . $message .
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' .
+        '</div>';
+}
+
+// Format date
+function format_date($date) {
+    if(!$date) return '';
+    return date('d M Y', strtotime($date));
+}
 
 // Check if user is logged in
 function check_login() {
@@ -25,25 +42,17 @@ function upload_image($file, $folder = 'packages') {
     $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
     $target_file = $target_dir . $new_filename;
-    
-    // Check if image file is actual image
     $check = getimagesize($file['tmp_name']);
     if($check === false) {
         return ['success' => false, 'message' => 'File is not an image.'];
     }
-    
-    // Check file size (5MB max)
     if ($file['size'] > 5000000) {
         return ['success' => false, 'message' => 'File is too large. Max 5MB allowed.'];
     }
-    
-    // Allow certain file formats
     $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     if(!in_array($file_extension, $allowed)) {
         return ['success' => false, 'message' => 'Only JPG, JPEG, PNG, GIF & WEBP files are allowed.'];
     }
-    
-    // Upload file
     if (move_uploaded_file($file['tmp_name'], $target_file)) {
         return ['success' => true, 'filename' => $new_filename, 'path' => $folder . '/' . $new_filename];
     } else {
@@ -66,20 +75,6 @@ function format_price($price) {
     return '₹' . number_format($price, 0);
 }
 
-// Format date
-function format_date($date) {
-    return date('d M Y', strtotime($date));
-}
-
-// Get category name by ID
-function get_category_name($conn, $id) {
-    $query = "SELECT name FROM categories WHERE id = $id";
-    $result = mysqli_query($conn, $query);
-    if($row = mysqli_fetch_assoc($result)) {
-        return $row['name'];
-    }
-    return 'N/A';
-}
 
 // Get destination name by ID
 function get_destination_name($conn, $id) {
@@ -97,22 +92,6 @@ function clean_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
-}
-
-// Success message
-function success_message($message) {
-    return '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle"></i> ' . $message . '
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>';
-}
-
-// Error message
-function error_message($message) {
-    return '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle"></i> ' . $message . '
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>';
 }
 
 // Pagination function

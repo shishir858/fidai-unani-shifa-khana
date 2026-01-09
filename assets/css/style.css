@@ -1227,6 +1227,7 @@ h6 {
 .heading__desc {
   font-size: 16px;
   margin-bottom: 0;
+  color: #000;
 }
 
 .heading-layout2 .heading__title {
@@ -2215,7 +2216,7 @@ input[type=radio] {
   position: relative;
   padding-left: 27px;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 9px;
 }
 .list-items li:before {

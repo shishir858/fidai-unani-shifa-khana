@@ -205,6 +205,12 @@ CREATE TABLE `treatments` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+-- Add new fields for key features, care plans, core values, health tips
+ALTER TABLE `treatments`
+  ADD COLUMN `features` TEXT DEFAULT NULL,
+  ADD COLUMN `care_plans` TEXT DEFAULT NULL,
+  ADD COLUMN `core_values` TEXT DEFAULT NULL,
+  ADD COLUMN `health_tips` TEXT DEFAULT NULL;
 
 --
 -- Dumping data for table `treatments`

@@ -158,8 +158,7 @@ include '../includes/sidebar.php';
                 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" 
-                               <?php echo $category['is_active'] ? 'checked' : ''; ?>>
+                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" <?php echo $category['is_active'] ? 'checked' : ''; ?>>
                         <label class="form-check-label" for="is_active">
                             Active (visible on website)
                         </label>
@@ -233,4 +232,5 @@ document.getElementById('icon').addEventListener('input', function() {
 });
 ";
 include '../includes/footer.php'; 
+
 ?>

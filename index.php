@@ -5,69 +5,114 @@
     ============================== -->
     <section class="slider">
       <div class="slick-carousel m-slides-0"
-        data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700,"fade": true,"cssEase": "linear"}'>
+        data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700, "fade": true, "cssEase": "linear", "autoplay": true, "autoplaySpeed": 3000}'>
         <div class="slide-item align-v-h">
-          <div class="bg-img"><img src="assets/images/sliders/2.jpeg" alt="slide img"></div>
+          <div class="bg-img"><img src="assets/images/sliders/1.png" alt="slide img"></div>
         </div><!-- /.slide-item -->
         <div class="slide-item align-v-h">
-          <div class="bg-img"><img src="assets/images/sliders/3.jpeg" alt="slide img"></div>
+          <div class="bg-img"><img src="assets/images/sliders/2.png" alt="slide img"></div>
+        </div><!-- /.slide-item -->
+        <div class="slide-item align-v-h">
+          <div class="bg-img"><img src="assets/images/sliders/3.png" alt="slide img 3"></div>
+        </div><!-- /.slide-item -->
+        <div class="slide-item align-v-h">
+          <div class="bg-img"><img src="assets/images/sliders/4.png" alt="slide img 4"></div>
         </div><!-- /.slide-item -->
       </div><!-- /.carousel -->
     </section><!-- /.slider -->
 
     <!-- ============================
-        contact info
+        contact info (commented out)
     ============================== -->
+    <!--
     <section class="contact-info py-0">
-      <div class="container">
-        <div class="row row-no-gutter boxes-wrapper">
-          <div class="col-sm-12 col-md-4">
-            <div class="contact-box d-flex">
-              <div class="contact__icon">
-                <i class="icon-call3"></i>
-              </div>
-              <div class="contact__content">
-                <h2 class="contact__title">Call for Appointment</h2>
-                <p class="contact__desc">For consultation, treatment, or any health enquiry, call us directly. We provide personalized Unani care for chronic and lifestyle diseases.</p>
-                <a href="tel:+919876543210" class="phone__number">
-                  <i class="icon-phone"></i> <span>+91 9634430627</span>
-                </a>
-              </div>
+      ...existing code...
+    </section>
+    -->
+
+    <!-- ============================
+        Categories Carousel Inline
+    ============================== -->
+    <section class="categories-carousel py-4 mt-4">
+      <div class="container-fluid">
+        <div class="slick-carousel"
+          data-slick='{"slidesToShow": 5, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 2500, "arrows": true, "dots": false, "responsive": [ {"breakpoint": 1200, "settings": {"slidesToShow": 4}}, {"breakpoint": 992, "settings": {"slidesToShow": 3}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 3}}]}'>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/1.jfif" alt="Cancer" class="category-img-inner">
             </div>
+            <div class="mt-2 fw-bold">Cancer Treatment</div>
           </div>
-          <div class="col-sm-12 col-md-4">
-            <div class="contact-box d-flex">
-              <div class="contact__icon">
-                <i class="icon-health-report"></i>
-              </div>
-              <div class="contact__content">
-                <h2 class="contact__title">Clinic Address</h2>
-                <p class="contact__desc mb-0">Fidai Unani Shifa Khana<br>Near Jama Masjid, Main Road, City Name, State, India</p>
-                <a href="contact-us.php" class="btn btn__white btn__outlined btn__rounded mt-2">
-                  <span>Get Directions</span><i class="icon-arrow-right"></i>
-                </a>
-              </div>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/2.jfif" alt="Liver" class="category-img-inner">
             </div>
+            <div class="mt-2 fw-bold">Liver Disease</div>
           </div>
-          <div class="col-sm-12 col-md-4">
-            <div class="contact-box d-flex">
-              <div class="contact__icon">
-                <i class="icon-heart2"></i>
-              </div>
-              <div class="contact__content">
-                <h2 class="contact__title">Clinic Timings</h2>
-                <ul class="time__list list-unstyled mb-0">
-                  <li><span>Morning</span><span>10:30 am - 2:30 pm</span></li>
-                  <li><span>Evening</span><span>5:00 pm - 6:00 pm</span></li>
-                  <li><span>Saturday</span><span>Closed</span></li>
-                </ul>
-                <p class="contact__desc mt-2 mb-0">Emergency cases by prior appointment only.</p>
-              </div>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/3.jfif" alt="Kidney" class="category-img-inner">
             </div>
+            <div class="mt-2 fw-bold">Kidney Disease</div>
           </div>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/4.jfif" alt="Heart & Blood" class="category-img-inner">
+            </div>
+            <div class="mt-2 fw-bold">Heart & Blood Disorders</div>
+          </div>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/5.jfif" alt="Gastro" class="category-img-inner">
+            </div>
+            <div class="mt-2 fw-bold">Gastro & Digestive</div>
+          </div>
+          <div class="category-item text-center px-2">
+            <div class="category-img-circle">
+              <img src="assets/images/services/6.jfif" alt="Piles" class="category-img-inner">
+            </div>
+            <div class="mt-2 fw-bold">Piles (Bawasir)</div>
+          </div>
+          <!-- Add more categories as needed -->
         </div>
       </div>
-    </section><!-- /.contact-info -->
+      <style>
+        .category-img-circle {
+          width: 100px;
+          height: 100px;
+          margin: auto;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 3px solid #eee;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+        }
+        .category-img-inner {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+        @media (max-width: 767px) {
+          .category-img-circle {
+            width: 70px;
+            height: 70px;
+          }
+          .category-img-inner {
+            width: 55px;
+            height: 55px;
+          }
+          .categories-carousel .slick-prev,
+          .categories-carousel .slick-next {
+            display: none !important;
+          }
+        }
+      </style>
+        </div>
+      </div>
+    </section>
 
     <!-- ========================
       About Layout 2
@@ -142,7 +187,7 @@
           <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
             <div class="heading text-center mb-60">
               <h2 class="heading__subtitle">Natural & Effective Unani Treatment for Chronic Diseases</h2>
-              <h3 class="heading__title">Our Services</h3>
+              <h3 class="heading__title mb-60">Our Services</h3>
             </div><!-- /.heading -->
           </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -158,6 +203,7 @@
                   <div class="service__content">
                     <h4 class="service__title">CANCER TREATMENT</h4>
                     <p class="service__desc">यूनानी चिकित्सा के माध्यम से कैंसर के लक्षणों को कम करना, इम्युनिटी बढ़ाना और जीवन की गुणवत्ता सुधारना।</p>
+                    <a href="services-details.php?treatment=cancer" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -167,6 +213,7 @@
                   <div class="service__content">
                     <h4 class="service__title">LIVER DISEASE TREATMENT</h4>
                     <p class="service__desc">लीवर से जुड़ी सभी गंभीर बीमारियों का सुरक्षित यूनानी इलाज।</p>
+                    <a href="services-details.php?treatment=liver" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -176,6 +223,7 @@
                   <div class="service__content">
                     <h4 class="service__title">KIDNEY DISEASE TREATMENT</h4>
                     <p class="service__desc">डायलिसिस से बचाव और किडनी फंक्शन सुधार के लिए यूनानी इलाज।</p>
+                    <a href="services-details.php?treatment=kidney" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -185,6 +233,7 @@
                   <div class="service__content">
                     <h4 class="service__title">HEART & BLOOD DISORDERS</h4>
                     <p class="service__desc">दिल और ब्लड प्रेशर की समस्या का स्थायी समाधान।</p>
+                    <a href="services-details.php?treatment=heart-blood" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -194,6 +243,7 @@
                   <div class="service__content">
                     <h4 class="service__title">GASTRO & DIGESTIVE DISEASES</h4>
                     <p class="service__desc">पाचन तंत्र से जुड़ी सभी बीमारियों का प्राकृतिक इलाज।</p>
+                    <a href="services-details.php?treatment=gastro-digestive" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -203,6 +253,7 @@
                   <div class="service__content">
                     <h4 class="service__title">PILES (Bawasir) Treatment</h4>
                     <p class="service__desc">बिना ऑपरेशन बवासीर का यूनानी इलाज।</p>
+                    <a href="services-details.php?treatment=piles" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -212,6 +263,7 @@
                   <div class="service__content">
                     <h4 class="service__title">SEXUAL TREATMENT</h4>
                     <p class="service__desc">गुप्त रोग और बांझपन का सुरक्षित यूनानी समाधान।</p>
+                    <a href="services-details.php?treatment=sexual" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
                 <div class="service-item service-card">
@@ -221,6 +273,7 @@
                   <div class="service__content">
                     <h4 class="service__title">ALLERGY & ASTHMA</h4>
                     <p class="service__desc">दमा और एलर्जी का स्थायी यूनानी इलाज।</p>
+                    <a href="services-details.php?treatment=allergy-asthma" class="btn btn__secondary btn__outlined btn__rounded"><span>Read More</span><i class="icon-arrow-right"></i></a>
                   </div>
                 </div>
             </div>
@@ -267,9 +320,9 @@
     <!-- ======================
     Features Layout 2
     ========================= -->
-    <section class="features-layout2 pt-130 bg-overlay bg-overlay-primary">
+    <section class="features-layout2 pt-130 bg-overlay bg-overlay-secondary">
       <div class="bg-img">
-        <img src="assets/images/backgrounds/2.jpg" alt="background">
+        <img src="assets/images/backgrounds/3.jpg" alt="background">
       </div>
       <div class="container">
         <div class="row">
@@ -454,7 +507,7 @@
           <div class="col-md-12 col-lg-6 offset-lg-3 text-center">
             <p class="font-weight-bold color-gray mb-0">
               At Fid​ai Unani Shifa Khana, we are committed to natural healing and long-term wellness.
-              <a href="#" class="color-secondary">
+              <a href="#" class="color-primary">
                 <span>Contact Us for Consultation</span> <i class="icon-arrow-right"></i>
               </a>
             </p>

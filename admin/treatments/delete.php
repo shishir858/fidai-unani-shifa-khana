@@ -3,41 +3,46 @@ require_once '../includes/config.php';
 require_once '../includes/functions.php';
 check_login();
 
-// Get package ID
 if(!isset($_GET['id'])) {
     header('Location: index.php');
     exit;
 }
-
 $id = intval($_GET['id']);
 
-// Check if package has bookings
-$booking_count_query = "SELECT COUNT(*) as count FROM bookings WHERE package_id = ?";
-$stmt = mysqli_prepare($conn, $booking_count_query);
+// Delete related appointments first to avoid foreign key constraint error
+$del_appointments = "DELETE FROM appointments WHERE treatment_id = $id";
+mysqli_query($conn, $del_appointments);
+
+// Delete gallery images
+$gallery_query = "SELECT image_path FROM treatment_gallery WHERE treatment_id = ?";
+$stmt = mysqli_prepare($conn, $gallery_query);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
-$booking_count_result = mysqli_stmt_get_result($stmt);
-$booking_count = mysqli_fetch_assoc($booking_count_result)['count'];
+$gallery_result = mysqli_stmt_get_result($stmt);
+while($row = mysqli_fetch_assoc($gallery_result)) {
+    $img_path = '../../assets/images/treatments/' . $row['image_path'];
+    if(file_exists($img_path)) unlink($img_path);
+}
 mysqli_stmt_close($stmt);
+mysqli_query($conn, "DELETE FROM treatment_gallery WHERE treatment_id = $id");
 
-if($booking_count > 0) {
-    // Cannot delete package with bookings
-    header('Location: index.php?msg=cannot_delete');
-    exit;
+// Delete feature image
+$img_query = "SELECT feature_image FROM treatments WHERE id = $id";
+$img_result = mysqli_query($conn, $img_query);
+if($img_result && $img = mysqli_fetch_assoc($img_result)) {
+    $img_path = '../../assets/images/treatments/' . $img['feature_image'];
+    if($img['feature_image'] && file_exists($img_path)) unlink($img_path);
 }
 
-// Get package image to delete
-$image_query = "SELECT featured_image FROM tour_packages WHERE id = ?";
-$stmt = mysqli_prepare($conn, $image_query);
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);
-$image_result = mysqli_stmt_get_result($stmt);
-$package = mysqli_fetch_assoc($image_result);
-mysqli_stmt_close($stmt);
-
-// Delete related data first
-$stmt = mysqli_prepare($conn, "DELETE FROM package_destinations WHERE package_id = ?");
-mysqli_stmt_bind_param($stmt, "i", $id);
+// Delete treatment
+$del_query = "DELETE FROM treatments WHERE id = $id";
+if(mysqli_query($conn, $del_query)) {
+    header('Location: index.php?msg=deleted');
+    exit;
+} else {
+    header('Location: index.php?msg=error');
+    exit;
+}
 mysqli_stmt_execute($stmt);
 mysqli_stmt_close($stmt);
 

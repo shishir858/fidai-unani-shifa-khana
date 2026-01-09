@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <?php
-// Fetch logo from settings table
-include_once __DIR__ . '/../admin/includes/config.php';
+include 'config.php';
+
 $logo = 'assets/images/logo/logo-light.PNG';
 if (isset($conn)) {
   $res = $conn->query("SELECT value FROM settings WHERE `key`='logo' LIMIT 1");
@@ -39,7 +38,7 @@ if (isset($conn)) {
   /* Fixed Call & WhatsApp Buttons */
 .fixed-contact-buttons {
   position: fixed;
-  top: 70%;
+  top: 85%;
   right: 18px;
   z-index: 9999;
   display: flex;
@@ -113,7 +112,7 @@ if (isset($conn)) {
                       </a>
                       <p>Please feel free to contact our friendly reception staff with any general or medical enquiry.
                       </p>
-                      <a href="appointment.html" class="btn btn__secondary btn__link btn__block">
+                      <a href="appointment.php" class="btn btn__secondary btn__link btn__block">
                         <span>Make Appointment</span> <i class="icon-arrow-right"></i>
                       </a>
                     </div><!-- /.miniPopup-emergency -->

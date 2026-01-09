@@ -281,7 +281,7 @@
 <body>
     <!-- Top Header -->
     <header class="admin-header">
-        <a href="<?php echo BASE_URL; ?>dashboard.php" class="logo">
+        <a href="<?php echo BASE_URL; ?>dashboard" class="logo">
              Fidai Unani Shifa Khana
         </a>
         
@@ -298,10 +298,10 @@
                     <span class="ms-2"><?php echo $_SESSION['admin_name'] ?? 'Admin'; ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>settings/profile.php"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>settings/general.php"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>settings/profile"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>settings/general"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </div>
         </div>
