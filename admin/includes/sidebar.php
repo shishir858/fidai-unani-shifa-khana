@@ -13,16 +13,16 @@
                 <small class="text-muted px-3 d-block mb-2">CLINIC MANAGEMENT</small>
             </li>
             <li class="menu-item">
-                <a href="<?php echo BASE_URL; ?>appointment/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/appointment/') !== false) ? 'active' : ''; ?>">
-                    <i class="fas fa-calendar-check"></i>
-                    <span>Appointments</span>
-                </a>
+                    <a href="<?php echo BASE_URL; ?>appointment/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/appointment/') !== false) ? 'active' : ''; ?>">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
             </li>
             <li class="menu-item">
-                <a href="<?php echo BASE_URL; ?>treatments/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/treatments/') !== false) ? 'active' : ''; ?>">
-                    <i class="fas fa-stethoscope"></i>
-                    <span>Treatments</span>
-                </a>
+                    <a href="<?php echo BASE_URL; ?>treatments/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/treatments/') !== false) ? 'active' : ''; ?>">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>Service</span>
+                    </a>
             </li>
             <li class="menu-item">
                 <a href="<?php echo BASE_URL; ?>categories/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/categories/') !== false) ? 'active' : ''; ?>">
@@ -37,17 +37,12 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="<?php echo BASE_URL; ?>faqs/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/faqs/') !== false) ? 'active' : ''; ?>">
-                    <i class="fas fa-question-circle"></i>
-                    <span>FAQs</span>
-                </a>
-            </li>
-            <li class="menu-item">
                 <a href="<?php echo BASE_URL; ?>doctor/index.php" class="menu-link <?php echo (strpos($_SERVER['PHP_SELF'], '/doctor/') !== false) ? 'active' : ''; ?>">
                     <i class="fas fa-user-md"></i>
-                    <span>Doctor</span>
+                    <span>Our Doctor</span>
                 </a>
             </li>
+                <!-- Removed non-existent FAQs and Doctor links -->
             <li class="menu-item">
                 <hr class="my-2 mx-3">
                 <small class="text-muted px-3 d-block mb-2">SETTINGS</small>

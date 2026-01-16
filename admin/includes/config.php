@@ -22,7 +22,14 @@ define('SITE_URL', '/');
 if (!defined('BASE_URL')) {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    $dir = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))), '/') . '/admin/';
+    // Get the path up to and including /admin/
+    $script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+    $admin_pos = strpos($script_name, '/admin/');
+    if ($admin_pos !== false) {
+        $dir = substr($script_name, 0, $admin_pos + 7); // 7 = strlen('/admin/')
+    } else {
+        $dir = '/admin/';
+    }
     define('BASE_URL', $protocol . $host . $dir);
 }
 

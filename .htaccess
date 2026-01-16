@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Hide .php extension for all files except admin panel
+RewriteCond %{REQUEST_URI} !^/fidai-unani-shifa-khana/admin/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# Allow query strings (e.g., service-details?treatment=cancer)
+RewriteCond %{REQUEST_URI} !^/fidai-unani-shifa-khana/admin/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)\?(.*)$ $1.php?$2 [L]
+

@@ -1,3 +1,3 @@
 <?php include 'includes/header.php'; ?>
-<!-- Appointment Page Content -->
+<!-- Doctors Page Content -->
 <?php include 'includes/footer.php'; ?>

@@ -49,11 +49,11 @@ include '../includes/sidebar.php';
 <div class="main-content">
     <div class="page-header">
         <div>
-            <h1 class="page-title">Tour Packages</h1>
+            <h1 class="page-title">Services</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard.php">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Tour Packages</li>
+                    <li class="breadcrumb-item active">Services</li>
                 </ol>
             </nav>
         </div>

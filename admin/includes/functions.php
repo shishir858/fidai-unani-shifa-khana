@@ -46,8 +46,8 @@ function upload_image($file, $folder = 'packages') {
     if($check === false) {
         return ['success' => false, 'message' => 'File is not an image.'];
     }
-    if ($file['size'] > 5000000) {
-        return ['success' => false, 'message' => 'File is too large. Max 5MB allowed.'];
+    if ($file['size'] > 500000) {
+        return ['success' => false, 'message' => 'File is too large. Max 500KB allowed.'];
     }
     $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     if(!in_array($file_extension, $allowed)) {

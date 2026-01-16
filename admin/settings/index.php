@@ -16,16 +16,16 @@ mysqli_query($conn, $create_table);
 // Insert default settings if not exists
 $default_settings = [
     // Site Information
-    ['site_name', 'Fidai Unani Shifa Khana Private Tours', 'site_info'],
-    ['site_tagline', 'Your Trusted Travel Partner in India', 'site_info'],
-    ['site_email', 'info@touristdriversindia.com', 'site_info'],
+    ['site_name', 'Fidai Unani Shifa Khana', 'site_info'],
+    ['site_tagline', 'High Profile Unani Clinic & Research Center', 'site_info'],
+    ['site_email', 'info@fidaiunanishifa.com', 'site_info'],
     ['site_phone', '+91-9876543210', 'site_info'],
     ['site_address', 'Delhi, India', 'site_info'],
     
     // Meta Tags
-    ['meta_title', 'Fidai Unani Shifa Khana - Private Tours & Car Rentals', 'meta'],
-    ['meta_description', 'Experience India with professional drivers and private tours. Book Golden Triangle, Rajasthan, Himachal tours.', 'meta'],
-    ['meta_keywords', 'india tours, car rental, private driver, golden triangle, rajasthan tour', 'meta'],
+    ['meta_title', 'Fidai Unani Shifa Khana - Unani Clinic & Treatments', 'meta'],
+    ['meta_description', 'Best Unani clinic for chronic and critical diseases. Expert doctors, authentic Unani medicines, and advanced treatments.', 'meta'],
+    ['meta_keywords', 'unani clinic, unani doctor, unani treatment, herbal medicine, chronic disease, liver, kidney, allergy, piles', 'meta'],
     
     // Social Links
     ['facebook_url', 'https://facebook.com/', 'social'],
@@ -328,5 +328,12 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
 });
 </script>
+
+<style>
+    /* Fix: Prevent content from going behind sidebar, use sidebar width */
+    .main-content {
+        margin-left: 10% !important;
+    }
+</style>
 
 <?php include '../includes/footer.php'; ?>
