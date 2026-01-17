@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($upload_result['success']) {
             $feature_image = $upload_result['filename'];
         } else {
-            $errors[] = $upload_result['error'];
+            $errors[] = $upload_result['message'];
         }
     }
 

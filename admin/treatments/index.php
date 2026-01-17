@@ -142,7 +142,9 @@ include '../includes/sidebar.php';
                                 <span class="badge bg-secondary">#<?php echo $treatment['id']; ?></span>
                             </td>
                             <td>
-                                <?php if(!empty($treatment['feature_image'])): ?>
+                                <?php 
+                                $img_path = '../../assets/images/treatments/' . $treatment['feature_image'];
+                                if(!empty($treatment['feature_image']) && file_exists($img_path)) : ?>
                                     <img src="<?php echo SITE_URL . 'assets/images/treatments/' . $treatment['feature_image']; ?>" 
                                          alt="<?php echo htmlspecialchars($treatment['title']); ?>" 
                                          class="package-thumb">

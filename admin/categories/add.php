@@ -3,12 +3,13 @@ require_once '../includes/config.php';
 require_once '../includes/functions.php';
 check_login();
 $error = '';
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $image = '';
     // Handle image upload
     if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $target_dir = '../assets/images/categories/';
+        $target_dir = '../../assets/images/categories/';
         if(!is_dir($target_dir)) { mkdir($target_dir, 0777, true); }
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg','jpeg','png','gif','webp'];

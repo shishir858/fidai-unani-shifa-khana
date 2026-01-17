@@ -46,5 +46,68 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- OwlCarousel2 CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+<!-- OwlCarousel2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<!-- Categories Carousel JS -->
+<script src="assets/js/categories-carousel.js"></script>
+
+<script>
+	$(document).ready(function(){
+		// Featured Treatments Carousel
+		$('.featured-treatments-carousel').owlCarousel({
+			loop:true,
+			margin:24,
+			nav:true,
+			dots:true,
+			autoplay:true,
+			autoplayTimeout:3500,
+			autoplayHoverPause:true,
+			responsive:{
+				0:{items:1},
+				576:{items:2},
+				992:{items:4}
+			},
+			slideBy:1
+		});
+		// Testimonial Carousel
+		$('.testimonial-carousel').owlCarousel({
+			loop:true,
+			margin:24,
+			nav:true,
+			dots:true,
+			autoplay:true,
+			autoplayTimeout:3500,
+			autoplayHoverPause:true,
+			responsive:{
+				0:{items:1},
+				576:{items:2},
+				992:{items:4}
+			},
+			slideBy:1
+		});
+		// Video Gallery Carousel
+		$('.video-carousel').owlCarousel({
+			loop:true,
+			margin:24,
+			nav:true,
+			dots:true,
+			autoplay:true,
+			autoplayTimeout:3500,
+			autoplayHoverPause:true,
+			responsive:{
+				0:{items:1},
+				576:{items:2},
+				992:{items:3},
+				1200:{items:4}
+			},
+			slideBy:1
+		});
+	});
+	</script>
 	</body>
 	</html>

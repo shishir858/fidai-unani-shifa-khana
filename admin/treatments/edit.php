@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $feature_image = $upload_result['filename'];
         } else {
-            $errors[] = $upload_result['error'];
+            $errors[] = $upload_result['message'];
         }
     }
 
@@ -271,11 +271,15 @@ include '../includes/sidebar.php';
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Feature Image</label>
-                    <?php if (!empty($treatment['feature_image'])): ?>
+                    <?php 
+                    $img_path = '../../assets/images/treatments/' . $treatment['feature_image'];
+                    if (!empty($treatment['feature_image']) && file_exists($img_path)) : ?>
                         <div class="mb-2">
                             <img src="<?php echo SITE_URL . 'assets/images/treatments/' . $treatment['feature_image']; ?>" alt="Current Image" class="img-thumbnail" style="max-width: 400px;">
                             <p class="text-muted small mt-1">Current image</p>
                         </div>
+                    <?php else: ?>
+                        <div class="mb-2 text-danger">No image found or file missing.</div>
                     <?php endif; ?>
                     <input type="file" name="feature_image" id="feature_image" class="form-control" accept="image/*">
                     <small class="text-muted">Leave empty to keep current image. Recommended: 1200x800px, Max 5MB.</small>

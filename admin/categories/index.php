@@ -42,7 +42,12 @@ include '../includes/sidebar.php';
                         <td><?php echo $category['id']; ?></td>
                         <td>
                             <?php if(!empty($category['image'])): ?>
-                                <img src="../assets/images/categories/<?php echo $category['image']; ?>" alt="Category Image" style="max-width:60px;max-height:40px;">
+                                <div>
+                                    <img src="/fidai-unani-shifa-khana/assets/images/categories/<?php echo $category['image']; ?>" alt="Category Image" style="max-width:60px;max-height:40px;">
+                                        <div style="font-size:10px;color:#d63b3b;word-break:break-all;">
+                                            <?php echo '/fidai-unani-shifa-khana/assets/images/categories/' . $category['image']; ?>
+                                        </div>
+                                </div>
                             <?php else: ?>
                                 <span class="text-muted">No image</span>
                             <?php endif; ?>

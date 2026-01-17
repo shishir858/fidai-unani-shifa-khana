@@ -39,6 +39,10 @@ function generate_slug($string) {
 // Upload image function
 function upload_image($file, $folder = 'packages') {
     $target_dir = UPLOAD_PATH . $folder . '/';
+    // Ensure target directory exists
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
     $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
     $target_file = $target_dir . $new_filename;

@@ -50,6 +50,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fidai Unani Shifa Khana</title>
     <link href="assets/css/style.css" rel="stylesheet">
+    <!-- OwlCarousel2 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <!-- Bootstrap 5 CSS (CDN fallback for safety) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons CDN -->
@@ -66,32 +69,32 @@
         <a href="#">Fidai Unani Shifa Khana</a>
         <a href="#">Testimonials</a>
         <a href="#">Blogs</a>
-        <a href="/contact.php">Contact Us</a>
+        <a href="contact">Contact Us</a>
         <a href="https://wa.me/919999999999">Whatsapp Us</a>
       </div>
       <div class="top-right">
-        <span>📞 Delhi: <a href="tel:9999446622">9999446622</a></span>
-        <span>📞 Gurgaon: <a href="tel:9354471022">9354471022</a></span>
+        <span>📞 <a href="tel:9999446622">9999446622</a></span>
+        <span>📞 <a href="tel:9354471022">9354471022</a></span>
       </div>
     </div>
 
     <!-- Desktop Main Header -->
     <header class="main-header desktop-main-header">
       <div class="logo">
-        <a href="/">
+        <a href="./">
           <img src="assets/images/logo/logo-light.png" alt="Fidai Unani Shifa Khana">
         </a>
       </div>
       <nav class="nav-menu">
+        <a href="./">Home</a>
         <a href="about">About Us</a>
-        <a href="doctors.php">Our Doctors</a>
-        <a href="services.php">Specialities</a>
-        <a href="treatments.php">Treatments</a>
+        <a href="doctors">Our Doctors</a>
+        <a href="services">Specialities</a>
         <a href="#">FAQs</a>
       </nav>
       <div class="header-buttons">
         <a href="#" class="international">Emergency Consultant</a>
-        <a href="/appointment.php" class="appointment">Book Appointments</a>
+        <a href="appointment" class="appointment">Book Appointments</a>
       </div>
     </header>
 
