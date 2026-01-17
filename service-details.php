@@ -1,45 +1,47 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+require_once 'admin/includes/config.php';
+$slug = isset($_GET['service']) ? mysqli_real_escape_string($conn, $_GET['service']) : '';
+$service = false;
+if($slug) {
+  $result = mysqli_query($conn, "SELECT * FROM treatments WHERE slug='$slug' AND status='active' LIMIT 1");
+  if($result && mysqli_num_rows($result) > 0) {
+    $service = mysqli_fetch_assoc($result);
+  }
+}
+include 'includes/header.php';
+?>
 
 <!-- Service Details Hero Section -->
 <section class="service-details-hero-section section-bg" style="padding: 64px 0 32px 0; background: linear-gradient(90deg, #e6f2e6 60%, #f8f9fa 100%);">
   <div class="container">
+    <?php if($service): ?>
     <div class="row align-items-center">
       <div class="col-md-7 mb-4 mb-md-0">
         <h1 class="display-5 fw-bold" style="color:#1c4307;">
-          <?php 
-            $service = isset($_GET['service']) ? htmlspecialchars($_GET['service']) : 'Service';
-            $serviceTitles = [
-              'liver' => 'Liver Treatment',
-              'kidney' => 'Kidney Stone',
-              'piles' => 'Piles & Fissure',
-              'skin' => 'Skin Diseases',
-              'sexual' => 'Sexual Wellness',
-              'joint' => 'Joint Pain',
-            ];
-            echo isset($serviceTitles[$service]) ? $serviceTitles[$service] : 'Service Details';
-          ?>
+          <?php echo htmlspecialchars($service['title']); ?>
         </h1>
         <p class="lead" style="color:#1c4307;">
-          <?php
-            $serviceDescs = [
-              'liver' => 'Advanced Unani therapies for liver disorders, detoxification, and improved liver function.',
-              'kidney' => 'Natural remedies and non-invasive procedures for kidney stones and urinary health.',
-              'piles' => 'Effective Unani treatments for piles, fissures, and digestive wellness.',
-              'skin' => 'Herbal and Unani solutions for chronic skin conditions and hair care.',
-              'sexual' => 'Confidential care and natural therapies for men’s and women’s sexual health.',
-              'joint' => 'Unani and herbal pain management for arthritis, back pain, and joint disorders.',
-            ];
-            echo isset($serviceDescs[$service]) ? $serviceDescs[$service] : 'Learn more about our specialized Unani and herbal treatments.';
-          ?>
+          <?php echo htmlspecialchars($service['short_description']); ?>
         </p>
+        <?php if(!empty($service['doctor_name'])): ?>
+        <div class="mb-2"><span class="badge bg-success"><i class="bi bi-person-badge"></i> <?php echo htmlspecialchars($service['doctor_name']); ?></span></div>
+        <?php endif; ?>
       </div>
       <div class="col-md-5 text-center">
-        <img src="assets/images/services/<?php echo $service; ?>.png" alt="Service Image" class="img-fluid rounded shadow" style="max-height:320px; background:#fff; padding:12px;">
+        <?php if(!empty($service['feature_image']) && file_exists('assets/images/treatments/' . $service['feature_image'])): ?>
+          <img src="assets/images/treatments/<?php echo htmlspecialchars($service['feature_image']); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="img-fluid rounded shadow" style="max-height:320px; background:#fff; padding:12px;">
+        <?php else: ?>
+          <img src="assets/images/services/default.png" alt="Service Image" class="img-fluid rounded shadow" style="max-height:320px; background:#fff; padding:12px;">
+        <?php endif; ?>
       </div>
     </div>
+    <?php else: ?>
+    <div class="row"><div class="col text-center text-danger py-5"><h2>Service not found</h2></div></div>
+    <?php endif; ?>
   </div>
 </section>
 
+<?php if($service): ?>
 <!-- Service Details Content Section -->
 <section class="service-details-content-section" style="padding: 48px 0 32px 0;">
   <div class="container">
@@ -47,7 +49,177 @@
       <div class="col-lg-8">
         <div class="card shadow-sm border-0 p-4 mb-4">
           <h3 class="fw-bold mb-3" style="color:#1c4307;">About This Service</h3>
-          <p class="text-muted">Detailed information about the selected service will be displayed here. You can add treatment process, benefits, FAQs, and more for each service.</p>
+          <div class="mb-3 text-muted" style="font-size:1.13rem;">
+            <?php echo nl2br(htmlspecialchars($service['full_description'])); ?>
+          </div>
+          <!-- Key Features, Care Plans, Core Values, Health Tips -->
+          <div class="row g-4 mb-4">
+            <?php if(!empty($service['features'])): ?>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <h4 class="fw-bold mb-3" style="color:#1c4307;"><i class="bi bi-stars"></i> Key Features</h4>
+                <div class="d-flex flex-wrap gap-3">
+                  <?php 
+                  $featureIcons = ['bi-shield-check', 'bi-droplet-half', 'bi-battery-charging', 'bi-flower2', 'bi-emoji-smile', 'bi-heart-pulse', 'bi-sun', 'bi-leaf'];
+                  $features = array_filter(array_map('trim', explode("\n", $service['features'])));
+                  foreach($features as $i => $feature): 
+                  ?>
+                  <div class="feature-modern-card p-3 px-4 rounded shadow-sm d-flex align-items-center" style="background:linear-gradient(90deg,#e6f2e6 70%,#f8f9fa 100%); min-width:220px;">
+                    <span class="me-3 fs-3 text-success"><i class="bi <?php echo $featureIcons[$i%count($featureIcons)]; ?>"></i></span>
+                    <span class="fw-semibold text-dark"> <?php echo htmlspecialchars($feature); ?> </span>
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['care_plans'])): ?>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <h4 class="fw-bold mb-3" style="color:#1c4307;"><i class="bi bi-heart-pulse"></i> Care Plans</h4>
+                <div class="d-flex flex-wrap gap-3">
+                  <?php 
+                  $planIcons = ['bi-lungs', 'bi-droplet', 'bi-capsule', 'bi-activity', 'bi-clipboard2-heart', 'bi-clipboard2-pulse', 'bi-clipboard2-check', 'bi-clipboard2-data'];
+                  $carePlans = array_filter(array_map('trim', explode("\n", $service['care_plans'])));
+                  foreach($carePlans as $i => $plan): 
+                  ?>
+                  <div class="feature-modern-card p-3 px-4 rounded shadow-sm d-flex align-items-center" style="background:linear-gradient(90deg,#f8f9fa 60%,#e6f2e6 100%); min-width:220px;">
+                    <span class="me-3 fs-3 text-danger"><i class="bi <?php echo $planIcons[$i%count($planIcons)]; ?>"></i></span>
+                    <span class="fw-semibold text-dark"> <?php echo htmlspecialchars($plan); ?> </span>
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['core_values'])): ?>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <h4 class="fw-bold mb-3" style="color:#1c4307;"><i class="bi bi-gem"></i> Our Core Values</h4>
+                <div class="d-flex flex-wrap gap-3">
+                  <?php 
+                  $coreIcons = ['bi-gem', 'bi-lightbulb', 'bi-people', 'bi-award', 'bi-globe', 'bi-emoji-heart-eyes', 'bi-star', 'bi-shield-lock'];
+                  $coreValues = array_filter(array_map('trim', explode("\n", $service['core_values'])));
+                  foreach($coreValues as $i => $value): 
+                  ?>
+                  <div class="feature-modern-card p-3 px-4 rounded shadow-sm d-flex align-items-center" style="background:linear-gradient(90deg,#e6f2e6 70%,#f8f9fa 100%); min-width:220px;">
+                    <span class="me-3 fs-3 text-primary"><i class="bi <?php echo $coreIcons[$i%count($coreIcons)]; ?>"></i></span>
+                    <span class="fw-semibold text-dark"> <?php echo htmlspecialchars($value); ?> </span>
+                  </div>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+          </div>
+            <?php if(!empty($service['health_tips'])): ?>
+            <div class="col-12">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#1c4307;"><i class="bi bi-info-circle"></i> Health Tips & FAQs</h5>
+                  <div class="accordion" id="faqsAccordion">
+                    <?php 
+                    $faqs = json_decode($service['health_tips'], true);
+                    if(is_array($faqs)):
+                      foreach($faqs as $i => $faq):
+                        if(!empty($faq['question']) && !empty($faq['answer'])):
+                    ?>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="faqHeading<?php echo $i; ?>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse<?php echo $i; ?>" aria-expanded="false" aria-controls="faqCollapse<?php echo $i; ?>">
+                          <?php echo htmlspecialchars($faq['question']); ?>
+                        </button>
+                      </h2>
+                      <div id="faqCollapse<?php echo $i; ?>" class="accordion-collapse collapse" aria-labelledby="faqHeading<?php echo $i; ?>" data-bs-parent="#faqsAccordion">
+                        <div class="accordion-body text-muted">
+                          <?php echo nl2br(htmlspecialchars($faq['answer'])); ?>
+                        </div>
+                      </div>
+                    </div>
+                    <?php 
+                        endif;
+                      endforeach;
+                    endif;
+                    ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+          </div>
+          <!-- Medical Details -->
+          <div class="row g-3">
+            <?php if(!empty($service['symptoms'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-exclamation-triangle"></i> Symptoms</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['symptoms'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['causes'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-bug"></i> Causes</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['causes'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['procedure'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-gear"></i> Procedure</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['procedure'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['medicines'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-capsule"></i> Medicines</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['medicines'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['duration'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-clock-history"></i> Duration</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['duration'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['side_effects'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-shield-exclamation"></i> Side Effects</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['side_effects'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+            <?php if(!empty($service['precautions'])): ?>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-2" style="color:#d63b3b;"><i class="bi bi-shield-check"></i> Precautions</h5>
+                  <div class="text-muted"> <?php echo nl2br(htmlspecialchars($service['precautions'])); ?> </div>
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>
+          </div>
         </div>
       </div>
       <div class="col-lg-4">
@@ -55,9 +227,19 @@
           <h5 class="fw-bold mb-3" style="color:#1c4307;">Book an Appointment</h5>
           <a href="appointment.php" class="btn btn-primary w-100" style="background:#d63b3b; border:none;">Book Now</a>
         </div>
+        <?php if(!empty($service['meta_title']) || !empty($service['meta_description']) || !empty($service['meta_keywords'])): ?>
+        <div class="card shadow-sm border-0 p-4 mb-4">
+          <h6 class="fw-bold mb-2" style="color:#d63b3b;">SEO Meta Info</h6>
+          <?php if(!empty($service['meta_title'])): ?><div><b>Meta Title:</b> <?php echo htmlspecialchars($service['meta_title']); ?></div><?php endif; ?>
+          <?php if(!empty($service['meta_description'])): ?><div><b>Meta Description:</b> <?php echo htmlspecialchars($service['meta_description']); ?></div><?php endif; ?>
+          <?php if(!empty($service['meta_keywords'])): ?><div><b>Meta Keywords:</b> <?php echo htmlspecialchars($service['meta_keywords']); ?></div><?php endif; ?>
+        </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
+</section>
+<?php endif; ?>
 </section>
 
 <?php include 'includes/footer.php'; ?>

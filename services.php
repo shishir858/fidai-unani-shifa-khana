@@ -44,7 +44,7 @@ $services = mysqli_query($conn, "SELECT t.*, c.name as category_name FROM treatm
               </div>
               <h5 class="fw-bold" style="color:#1c4307;"><?php echo htmlspecialchars($service['title']); ?></h5>
               <p class="text-muted"><?php echo htmlspecialchars($service['short_description'] ?? $service['description']); ?></p>
-              <a href="service-details?id=<?php echo $service['id']; ?>" class="btn btn-outline-primary mt-2">Learn More</a>
+              <a href="service-details?service=<?php echo urlencode($service['slug']); ?>" class="btn btn-outline-primary mt-2">Learn More</a>
             </div>
           </div>
         <?php endwhile; ?>
