@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 09, 2026 at 12:05 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Jan 18, 2026 at 04:28 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,9 +50,10 @@ CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
   `patient_name` varchar(255) NOT NULL,
   `phone` varchar(20) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `date` date NOT NULL,
-  `time` time NOT NULL,
-  `treatment_id` int(11) NOT NULL
+  `treatment_id` int(11) NOT NULL,
+  `message` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -72,14 +73,14 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `image`) VALUES
-(2, 'Liver', NULL),
-(3, 'Kidney', NULL),
-(4, 'Heart', NULL),
-(5, 'Gastro', NULL),
-(6, 'Piles', NULL),
-(7, 'Sexual', NULL),
-(8, 'Allergy', NULL),
-(10, 'cancer', 'cat_695f9692711454.53691067.jpeg');
+(2, 'Liver', 'cat_696b2f857dbeb4.84442324.jpg'),
+(3, 'Kidney', 'cat_696b2f7a505605.78478482.jpg'),
+(4, 'Heart', 'cat_696b2f72e99d10.90321474.jpg'),
+(5, 'Gastro', 'cat_696b2f6b042c93.43368821.jpg'),
+(6, 'Piles', 'cat_696b2f63a4b081.90073162.jpg'),
+(7, 'Sexual', 'cat_696b2f5c71cb53.52495601.jpg'),
+(8, 'Allergy', 'cat_696b2c451b8fb6.93364075.jpg'),
+(10, 'cancer', 'cat_696b2b9e15c7b9.11997880.jpg');
 
 -- --------------------------------------------------------
 
@@ -91,15 +92,20 @@ CREATE TABLE `doctor` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `experience` varchar(100) DEFAULT NULL,
+  `degree` varchar(255) DEFAULT NULL,
+  `awards` varchar(255) DEFAULT NULL,
+  `about` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`id`, `name`, `title`, `description`) VALUES
-(1, 'Hakeem Shan-e-Alam', 'Chief Unani Physician & Founder', 'Hakeem Shan-e-Alam is a highly experienced Unani physician dedicated to the treatment of chronic and critical diseases through authentic Unani medicine.');
+INSERT INTO `doctor` (`id`, `name`, `title`, `description`, `image`, `experience`, `degree`, `awards`, `about`) VALUES
+(2, 'Dr. Hakeem Shan-e-Alam', 'Chief Unani Physician & Founder', 'With over 25 years of experience, Dr. Fidai is a renowned Unani physician dedicated to holistic healing and patient-centered care. His expertise spans chronic disease management, herbal therapies, and innovative Unani procedures. He is known for his compassionate approach and commitment to advancing Unani medicine in India.', NULL, '25+ Years Experience', 'B.U.M.S., M.D. (Unani)', 'Awarded for Excellence', 'Member, Central Council of Indian Medicine, Published research in Unani journals, Speaker at national & international conferences, Committed to patient education & awareness');
 
 -- --------------------------------------------------------
 
@@ -130,10 +136,18 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`id`, `image`, `caption`) VALUES
-(1, 'assets/images/gallery/1.jpeg', 'Clinic Front'),
-(2, 'assets/images/gallery/2.jpeg', 'Reception'),
-(3, 'assets/images/gallery/3.jpeg', 'Consultation Room'),
-(4, 'assets/images/gallery/4.jpeg', 'Waiting Area');
+(8, 'assets/images/gallery/696b3620436ae_1768633888.png', ''),
+(9, 'assets/images/gallery/696b3637cb650_1768633911.jpeg', ''),
+(10, 'assets/images/gallery/696b3637d6d64_1768633911.jpeg', ''),
+(11, 'assets/images/gallery/696b3637e4606_1768633911.jpeg', ''),
+(12, 'assets/images/gallery/696b3637ee1cd_1768633911.jpeg', ''),
+(13, 'assets/images/gallery/696b36633494c_1768633955.jpeg', ''),
+(14, 'assets/images/gallery/696b36633c75e_1768633955.jpeg', ''),
+(15, 'assets/images/gallery/696b36634dbdc_1768633955.jpeg', ''),
+(16, 'assets/images/gallery/696b3663588f7_1768633955.jpeg', ''),
+(17, 'assets/images/gallery/696b36854a4db_1768633989.jpeg', ''),
+(18, 'assets/images/gallery/696b368562351_1768633989.jpeg', ''),
+(19, 'assets/images/gallery/696b368567c3c_1768633989.jpeg', '');
 
 -- --------------------------------------------------------
 
@@ -152,15 +166,15 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`key`, `value`) VALUES
 ('address', 'Ravlee Road, Chungi No-3, Police Chauki ke samne, Muradnagar, Ghaziabad, Uttar Pradesh'),
-('email', 'info@fidaiunanishifa.com'),
+('email', 'info@fidaiunanishifakhana.com'),
 ('emergency_phone', '9568304355'),
 ('facebook', 'https://facebook.com/fidaiunanishifa'),
 ('favicon', 'assets/images/favicon/favicon.png'),
 ('footer_about', 'Our goal is to deliver quality of care in a courteous, respectful, and compassionate manner. We hope you will allow us to care for you and strive to be the first and best choice for your family healthcare.'),
 ('footer_copyright', '© 2026 Fidai Unani Shifa Khana. All rights reserved.'),
-('google_map', 'https://maps.google.com/maps?q=Near%20Jama%20Masjid%2C%20Main%20Road%2C%20Muradnagar%2C%20Ghaziabad%2C%20UP%2C%20India&t=m&z=16&output=embed'),
+('google_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3496.806682711808!2d77.49528101053313!3d28.78502537547994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf44b76658181%3A0x1528c0ae17c44d44!2sFidai%20Unani%20Shifa%20Khana!5e0!3m2!1sen!2sus!4v1768729178388!5m2!1sen!2sus'),
 ('instagram', 'https://instagram.com/fidaiunanishifa'),
-('logo', 'assets/images/logo/logo.png'),
+('logo', 'assets/images/logo/logo-light.png'),
 ('meta_description', 'Best Unani natural treatment for chronic and lifestyle diseases in Muradnagar, Ghaziabad, Uttar Pradesh. Book appointment for personalized care.'),
 ('meta_keywords', 'unani, treatment, muradnagar, ghaziabad, natural, chronic, lifestyle, doctor, clinic'),
 ('meta_title', 'Fidai Unani Shifa Khana - Unani Natural Treatment in Muradnagar, Ghaziabad, UP'),
@@ -168,6 +182,42 @@ INSERT INTO `settings` (`key`, `value`) VALUES
 ('site_name', 'Fidai Unani Shifa Khana'),
 ('twitter', 'https://twitter.com/fidaiunanishifa'),
 ('whatsapp', '9634430627');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_settings`
+--
+
+CREATE TABLE `site_settings` (
+  `id` int(11) NOT NULL,
+  `setting_key` varchar(100) NOT NULL,
+  `setting_value` text DEFAULT NULL,
+  `setting_group` varchar(50) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `site_settings`
+--
+
+INSERT INTO `site_settings` (`id`, `setting_key`, `setting_value`, `setting_group`, `updated_at`) VALUES
+(1, 'site_name', 'Fidai Unani Shifa Khana', 'site_info', '2026-01-18 09:28:23'),
+(2, 'site_tagline', 'High Profile Unani Clinic & Research Center', 'site_info', '2026-01-18 09:28:23'),
+(3, 'site_email', 'info@fidaiunanishifa.com', 'site_info', '2026-01-18 09:28:23'),
+(4, 'site_phone', '+91-9876543210', 'site_info', '2026-01-18 09:28:23'),
+(5, 'site_address', 'Delhi, India', 'site_info', '2026-01-18 09:28:23'),
+(6, 'meta_title', 'Fidai Unani Shifa Khana - Unani Clinic & Treatments', 'meta', '2026-01-18 09:28:23'),
+(7, 'meta_description', 'Best Unani clinic for chronic and critical diseases. Expert doctors, authentic Unani medicines, and advanced treatments.', 'meta', '2026-01-18 09:28:23'),
+(8, 'meta_keywords', 'unani clinic, unani doctor, unani treatment, herbal medicine, chronic disease, liver, kidney, allergy, piles', 'meta', '2026-01-18 09:28:23'),
+(9, 'facebook_url', 'https://facebook.com/', 'social', '2026-01-18 09:28:23'),
+(10, 'instagram_url', 'https://instagram.com/', 'social', '2026-01-18 09:28:23'),
+(11, 'twitter_url', 'https://twitter.com/', 'social', '2026-01-18 09:28:23'),
+(12, 'youtube_url', 'https://youtube.com/', 'social', '2026-01-18 09:28:23'),
+(13, 'contact_email', 'contact@touristdriversindia.com', 'contact', '2026-01-18 09:28:23'),
+(14, 'support_email', 'support@touristdriversindia.com', 'contact', '2026-01-18 09:28:23'),
+(15, 'whatsapp_number', '+91-9876543210', 'contact', '2026-01-18 09:28:23'),
+(16, 'office_hours', 'Mon-Sat: 9:00 AM - 6:00 PM', 'contact', '2026-01-18 09:28:23');
 
 -- --------------------------------------------------------
 
@@ -208,12 +258,12 @@ CREATE TABLE `treatments` (
 --
 
 INSERT INTO `treatments` (`id`, `title`, `slug`, `short_description`, `full_description`, `symptoms`, `causes`, `procedure`, `medicines`, `duration`, `side_effects`, `precautions`, `doctor_name`, `related_treatments`, `status`, `feature_image`, `meta_title`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`, `features`, `care_plans`, `core_values`, `health_tips`) VALUES
-(10, 'Cancer Treatment (Unani Supportive Care)', 'cancer-treatment-unani-supportive-care', 'Unani supportive care for cancer focuses on improving immunity, reducing treatment-related side effects, and enhancing overall quality of life through natural and holistic therapies.', 'Unani medicine plays a supportive role in cancer care by helping the body cope better with the physical and emotional challenges of the disease. Herbal formulations and lifestyle guidance help manage fatigue, digestive issues, weakness, and stress, especially during chemotherapy and radiotherapy. This approach complements conventional treatment while promoting internal balance and well-being.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Herbal immunity boosters\nReduction in chemotherapy side effects\nImproved strength and stamina\nHolistic and natural care\nFocus on quality of life', 'Lung Cancer\nLiver Cancer\nGall Bladder Cancer', 'Personalized care\nNatural healing methods\nHolistic approach\nEthical and safe practices', '[{\"question\":\"Can liver diseases be treated naturally?\",\"answer\":\"Unani medicine helps improve liver function and supports natural detoxification.\"},{\"question\":\"How long does Unani treatment take for liver issues?\",\"answer\":\"Treatment duration depends on the severity and patient lifestyle.\"}]'),
-(11, 'Liver Disease Treatment', 'liver-disease-treatment', 'Unani treatment for liver diseases helps detoxify the liver, improve digestion, and restore normal liver function using herbal medicines.', 'The liver plays a vital role in digestion and detoxification. Unani medicine addresses liver disorders by correcting internal imbalances and strengthening liver function. Natural herbs help in conditions like fatty liver, hepatitis, and liver weakness, supporting long-term liver health.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Liver detoxification\nImproved digestion\nHerbal formulations\nHolistic healing', 'Fatty Liver\nHepatitis\nLiver Weakness', '', '[{\"question\":\"\",\"answer\":\"A balanced diet and timely treatment help maintain liver health naturally.\"}]'),
-(12, 'Kidney Disease Treatment', 'kidney-disease-treatment', 'Unani medicine supports kidney health by improving filtration, reducing inflammation, and maintaining fluid balance naturally.', 'Unani treatment for kidney diseases focuses on strengthening kidney function and reducing stress on the urinary system. Herbal remedies help manage swelling, fatigue, and urinary issues while supporting overall kidney health.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Supports kidney function\nReduces inflammation\nNatural diuretics\nPersonalized care', 'Chronic Kidney Disease\nKidney Weakness\nUrinary Disorders', '', '[{\"question\":\"Can Unani treatment cure kidney disease?\",\"answer\":\"Unani medicine helps slow progression and improve kidney function in early stages.\"},{\"question\":\"Is dialysis avoidable with Unani treatment?\",\"answer\":\"In early or mild cases, Unani care may help delay complications.\"}]'),
-(13, 'Heart & Blood Disorders Treatment', 'heart-blood-disorders-treatment', 'Unani medicine helps maintain heart health and proper blood circulation through natural therapies and lifestyle balance.', 'Heart and blood disorders are often linked to lifestyle and dietary habits. Unani treatment strengthens the heart, improves circulation, and supports healthy blood levels using herbal medicines and holistic principles.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Improves blood circulation\nSupports heart strength\nHelps manage blood pressure\nNatural and holistic care', 'Hypertension\nCholesterol Imbalance\nGeneral Heart Weakness', '', ''),
-(14, 'Gastro & Digestive Diseases Treatment', 'gastro-digestive-diseases-treatment', 'Unani treatment helps improve digestion, relieve stomach issues, and restore gut balance naturally.', 'Digestive health is central to overall well-being. Unani medicine treats digestive disorders by strengthening digestion, improving metabolism, and correcting internal imbalance through herbal remedies.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Improves digestion\nRelieves acidity and gas\nStrengthens metabolism\nNatural herbal care', 'Acidity\nIndigestion\nIBS\nConstipation', '', ''),
-(15, 'Piles (Bawasir) Treatment', 'piles-bawasir-treatment', 'Unani medicine provides natural relief from piles by reducing pain, swelling, and bleeding.', 'Unani treatment for piles focuses on improving digestion, softening stools, and reducing inflammation. Herbal medicines help manage symptoms without surgical intervention in many cases.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'active', NULL, NULL, NULL, NULL, '2026-01-09 08:46:04', NULL, 'Reduces pain and swelling\nControls bleeding\nImproves bowel movement\nNon-surgical approach', 'Internal Piles\nExternal Piles\nChronic Constipation', '', '');
+(10, 'Cancer Treatment', 'cancer-treatment', 'Unani supportive care for cancer focuses on improving immunity, reducing treatment-related side effects, and enhancing overall quality of life through natural and holistic therapies.', 'Unani medicine plays a supportive role in cancer care by helping the body cope better with the physical and emotional challenges of the disease. Herbal formulations and lifestyle guidance help manage fatigue, digestive issues, weakness, and stress, especially during chemotherapy and radiotherapy. This approach complements conventional treatment while promoting internal balance and well-being.', '', '', '', '', '', '', '', '', '', 'active', '696cf9c741631_1768749511.jpeg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:48:31', 'Herbal immunity boosters\r\nReduction in chemotherapy side effects\r\nImproved strength and stamina\r\nHolistic and natural care\r\nFocus on quality of life', 'Lung Cancer\r\nLiver Cancer\r\nGall Bladder Cancer', 'Personalized care\r\nNatural healing methods\r\nHolistic approach\r\nEthical and safe practices', '[{\"question\":\"Can liver diseases be treated naturally?\",\"answer\":\"Unani medicine helps improve liver function and supports natural detoxification.\"},{\"question\":\"How long does Unani treatment take for liver issues?\",\"answer\":\"Treatment duration depends on the severity and patient lifestyle.\"}]'),
+(11, 'Liver Disease Treatment', 'liver-disease-treatment', 'Unani treatment for liver diseases helps detoxify the liver, improve digestion, and restore normal liver function using herbal medicines.', 'The liver plays a vital role in digestion and detoxification. Unani medicine addresses liver disorders by correcting internal imbalances and strengthening liver function. Natural herbs help in conditions like fatty liver, hepatitis, and liver weakness, supporting long-term liver health.', '', '', '', '', '', '', '', '', '', 'active', '696cf9eb535d8_1768749547.jpeg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:49:07', 'Liver detoxification\r\nImproved digestion\r\nHerbal formulations\r\nHolistic healing', 'Fatty Liver\r\nHepatitis\r\nLiver Weakness', '', '[{\"question\":\"\",\"answer\":\"A balanced diet and timely treatment help maintain liver health naturally.\"}]'),
+(12, 'Kidney Disease Treatment', 'kidney-disease-treatment', 'Unani medicine supports kidney health by improving filtration, reducing inflammation, and maintaining fluid balance naturally.', 'Unani treatment for kidney diseases focuses on strengthening kidney function and reducing stress on the urinary system. Herbal remedies help manage swelling, fatigue, and urinary issues while supporting overall kidney health.', '', '', '', '', '', '', '', '', '', 'active', '696cfa0b9f3f4_1768749579.jpeg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:49:39', 'Supports kidney function\r\nReduces inflammation\r\nNatural diuretics\r\nPersonalized care', 'Chronic Kidney Disease\r\nKidney Weakness\r\nUrinary Disorders', '', '[{\"question\":\"Can Unani treatment cure kidney disease?\",\"answer\":\"Unani medicine helps slow progression and improve kidney function in early stages.\"},{\"question\":\"Is dialysis avoidable with Unani treatment?\",\"answer\":\"In early or mild cases, Unani care may help delay complications.\"}]'),
+(13, 'Heart & Blood Disorders Treatment', 'heart-blood-disorders-treatment', 'Unani medicine helps maintain heart health and proper blood circulation through natural therapies and lifestyle balance.', 'Heart and blood disorders are often linked to lifestyle and dietary habits. Unani treatment strengthens the heart, improves circulation, and supports healthy blood levels using herbal medicines and holistic principles.', '', '', '', '', '', '', '', '', '', 'active', '696cfa1cf356c_1768749596.jpeg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:49:56', 'Improves blood circulation\r\nSupports heart strength\r\nHelps manage blood pressure\r\nNatural and holistic care', 'Hypertension\r\nCholesterol Imbalance\r\nGeneral Heart Weakness', '', '[{\"question\":\"\",\"answer\":\"\"}]'),
+(14, 'Gastro Diseases Treatment', 'gastro-diseases-treatment', 'Unani treatment helps improve digestion, relieve stomach issues, and restore gut balance naturally.', 'Digestive health is central to overall well-being. Unani medicine treats digestive disorders by strengthening digestion, improving metabolism, and correcting internal imbalance through herbal remedies.', '', '', '', '', '', '', '', '', '', 'active', '696cfa2ca9d76_1768749612.jpeg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:50:12', 'Improves digestion\r\nRelieves acidity and gas\r\nStrengthens metabolism\r\nNatural herbal care', 'Acidity\r\nIndigestion\r\nIBS\r\nConstipation', '', '[{\"question\":\"\",\"answer\":\"\"}]'),
+(15, 'Piles (Bawasir) Treatment', 'piles-bawasir-treatment', 'Unani medicine provides natural relief from piles by reducing pain, swelling, and bleeding.', 'Unani treatment for piles focuses on improving digestion, softening stools, and reducing inflammation. Herbal medicines help manage symptoms without surgical intervention in many cases.', '', '', '', '', '', '', '', '', '', 'active', '696cfa41e9cc3_1768749633.jpg', '', '', '', '2026-01-09 08:46:04', '2026-01-18 20:50:33', 'Reduces pain and swelling\r\nControls bleeding\r\nImproves bowel movement\r\nNon-surgical approach', 'Internal Piles\r\nExternal Piles\r\nChronic Constipation', '', '[{\"question\":\"\",\"answer\":\"\"}]');
 
 -- --------------------------------------------------------
 
@@ -277,6 +327,13 @@ ALTER TABLE `settings`
   ADD PRIMARY KEY (`key`);
 
 --
+-- Indexes for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `setting_key` (`setting_key`);
+
+--
 -- Indexes for table `treatments`
 --
 ALTER TABLE `treatments`
@@ -309,13 +366,13 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `faqs`
@@ -327,13 +384,19 @@ ALTER TABLE `faqs`
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `treatments`
 --
 ALTER TABLE `treatments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `treatment_gallery`

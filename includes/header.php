@@ -1,3 +1,12 @@
+    <?php
+    require_once __DIR__ . '/config.php';
+    // Fetch settings for header/footer
+    $settings = [];
+    $result = $conn->query("SELECT `key`, `value` FROM settings");
+    while($row = $result->fetch_assoc()) {
+      $settings[$row['key']] = $row['value'];
+    }
+    ?>
     <!-- Marquee below header -->
     <div class="header-marquee-wrapper">
       <div class="header-marquee custom-marquee" id="custom-marquee" style="padding: 0 20px;">
@@ -66,15 +75,20 @@
     <!-- Desktop Top Bar -->
     <div class="top-bar desktop-top-bar">
       <div class="top-left">
-        <a href="#">Fidai Unani Shifa Khana</a>
-        <a href="#">Testimonials</a>
+        <a href="#"><?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?></a>
+        <a href="index.php#testimonial-section">Testimonials</a>
         <a href="#">Blogs</a>
         <a href="contact">Contact Us</a>
-        <a href="https://wa.me/919999999999">Whatsapp Us</a>
+        <?php if(!empty($settings['whatsapp'])): ?>
+        <a href="https://wa.me/<?php echo htmlspecialchars($settings['whatsapp']); ?>">Whatsapp Us</a>
+        <?php endif; ?>
       </div>
       <div class="top-right">
-        <span>📞 <a href="tel:9999446622">9999446622</a></span>
-        <span>📞 <a href="tel:9354471022">9354471022</a></span>
+        <?php if(!empty($settings['phone'])):
+          $phones = explode(',', $settings['phone']);
+          foreach($phones as $ph): ?>
+            <span>📞 <a href="tel:<?php echo trim($ph); ?>"><?php echo trim($ph); ?></a></span>
+        <?php endforeach; endif; ?>
       </div>
     </div>
 
@@ -82,7 +96,7 @@
     <header class="main-header desktop-main-header">
       <div class="logo">
         <a href="./">
-          <img src="assets/images/logo/logo-light.png" alt="Fidai Unani Shifa Khana">
+          <img src="<?php echo htmlspecialchars($settings['logo'] ?? 'assets/images/logo/logo-light.png'); ?>" alt="<?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?>">
         </a>
       </div>
       <nav class="nav-menu">
@@ -90,10 +104,10 @@
         <a href="about">About Us</a>
         <a href="doctors">Our Doctors</a>
         <a href="services">Specialities</a>
-        <a href="#">FAQs</a>
+        <a href="index.php#faq-section">FAQs</a>
       </nav>
       <div class="header-buttons">
-        <a href="#" class="international">Emergency Consultant</a>
+        <a href="tel:<?php echo htmlspecialchars($settings['emergency_phone'] ?? ''); ?>" class="international">Emergency Consultant</a>
         <a href="appointment" class="appointment">Book Appointments</a>
       </div>
     </header>
@@ -135,15 +149,15 @@
           <img src="assets/images/logo/logo-light.png" alt="Fidai Unani Shifa Khana" style="height:55px; max-width:90%;">
         </div>
         <nav class="mobile-nav-menu" style="display:flex; flex-direction:column; margin-bottom:18px; gap:10px;">
-          <a href="/about.php">About Us</a>
-          <a href="/doctors.php">Our Doctors</a>
-          <a href="/services.php">Specialities</a>
-          <a href="/treatments.php">Treatments</a>
-          <a href="#">FAQs</a>
+          <a href="about.php">About Us</a>
+          <a href="doctors.php">Our Doctors</a>
+          <a href="services.php">Specialities</a>
+          <a href="treatments.php">Treatments</a>
+          <a href="index.php#faq-section">FAQs</a>
         </nav>
         <div class="mobile-menu-btns" style="display:flex; gap:10px; justify-content:center;">
           <a href="#" class="mobile-intl-btn">International Patients</a>
-          <a href="/appointment.php" class="mobile-appt-btn">Book Appointments</a>
+          <a href="appointment.php" class="mobile-appt-btn">Book Appointments</a>
         </div>
       </div>
     </div>

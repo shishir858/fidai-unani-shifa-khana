@@ -69,22 +69,25 @@ $services = mysqli_query($conn, "SELECT t.*, c.name as category_name FROM treatm
       </div>
       <div class="col-lg-6">
         <div class="p-4 shadow rounded bg-white" style="max-width:420px;margin:0 auto;">
-           <h4 class="mb-3" style="font-weight:700;color:#1c4307;">Get personalized Unani & Herbal treatment from our experienced doctors. Your health and well-being are our top priority!</h4>
-          <form action="#" method="post">
-            <div class="mb-3">
-              <input type="text" class="form-control" name="name" placeholder="Your name*" required>
-            </div>
-            <div class="mb-3">
-              <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
-            </div>
-            <div class="mb-3">
-              <input type="email" class="form-control" name="email" placeholder="Email*" required>
-            </div>
-            <div class="mb-3">
-              <textarea class="form-control" name="message" rows="3" placeholder="-"></textarea>
-            </div>
-            <button type="submit" class="btn btn-danger w-100" style="font-weight:700;">Book Now</button>
-          </form>
+          <h4 class="mb-3" style="font-weight:700;color:#1c4307;">Get personalized Unani & Herbal treatment from our experienced doctors. Your health and well-being are our top priority!</h4>
+          <form method="post" action="">
+						<div class="mb-3">
+							<input type="text" class="form-control mb-2" name="name" placeholder="Your name*" required>
+						</div>
+						<div class="mb-3">
+							<input type="tel" class="form-control mb-2" name="phone" placeholder="Your Phone" required>
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control mb-2" name="address" placeholder="Your Address*" required>
+						</div>
+						<div class="mb-3">
+							<input type="date" class="form-control mb-2" name="date" placeholder="Preferred Date">
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control mb-2" name="treatment" placeholder="Treatment (Optional)">
+						</div>
+						<button type="submit" class="btn btn-danger w-100" style="font-weight:700;">Send</button>
+					</form>
         </div>
       </div>
     </div>

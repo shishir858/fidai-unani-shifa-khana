@@ -131,7 +131,7 @@
                   <div class="mb-2 text-muted" style="font-size:0.98rem;">
                      <i class="bi bi-folder"></i> <?php echo htmlspecialchars($treat['category_name']); ?>
                   </div>
-                  <a href="#" class="btn btn-outline-success btn-sm mt-2">Learn More</a>
+                  <a href="service-details?service=<?php echo urlencode($treat['slug']); ?>" class="btn btn-outline-success btn-sm mt-2">Learn More</a>
                </div>
             </div>
          </div>
@@ -240,7 +240,7 @@
 </section>
 
 <!-- ======= Testimonial Section (Modern Card Carousel) ======= -->
-<section class="testimonial-section py-5 bg-light">
+<section class="testimonial-section py-5 bg-light" id="testimonial-section">
    <div class="container">
       <h2 class="text-center mb-4" style="font-weight:800;color:#1c4307;">What Our Patients Say</h2>
          <p class="text-center mb-4" style="color:#555;max-width:600px;margin:0 auto 18px auto;font-size:1.08rem;">Read real stories and feedback from our patients who have experienced healing and care at Fidai Unani Shifa Khana.</p>
@@ -527,7 +527,7 @@
 </section>
 
 <!-- ======= FAQ Section ======= -->
-<section class="faq-section py-5">
+<section class="faq-section py-5" id="faq-section">
    <div class="container">
       <div class="row align-items-center">
          <div class="col-lg-6 mb-4 mb-lg-0 text-center">
@@ -605,7 +605,7 @@
          <div class="col-lg-6">
             <div class="p-4 shadow rounded bg-white" style="max-width:420px;margin:0 auto;">
                 <h4 class="mb-3" style="font-weight:700;color:#1c4307;">Get personalized Unani & Herbal treatment from our experienced doctors. Your health and well-being are our top priority!</h4>
-               <form action="#" method="post">
+               <form method="post" action="">
                   <div class="mb-3">
                      <input type="text" class="form-control" name="name" placeholder="Your name*" required>
                   </div>
@@ -613,10 +613,13 @@
                      <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
                   </div>
                   <div class="mb-3">
-                     <input type="email" class="form-control" name="email" placeholder="Email*" required>
+                     <input type="text" class="form-control" name="address" placeholder="Your Address*" required>
                   </div>
                   <div class="mb-3">
-                     <textarea class="form-control" name="message" rows="3" placeholder="-"></textarea>
+                     <input type="date" class="form-control" name="date" placeholder="Preferred Date">
+                  </div>
+                  <div class="mb-3">
+                     <input type="text" class="form-control" name="treatment" placeholder="Treatment (Optional)">
                   </div>
                   <button type="submit" class="btn btn-danger w-100" style="font-weight:700;">Book Now</button>
                </form>

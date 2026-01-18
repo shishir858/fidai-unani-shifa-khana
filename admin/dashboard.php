@@ -16,7 +16,7 @@ $stats = [
 ];
 
 // Recent appointments
-$recent_appointments_query = "SELECT a.*, t.title as treatment_title FROM appointments a LEFT JOIN treatments t ON a.treatment_id = t.id ORDER BY a.date DESC, a.time DESC LIMIT 5";
+$recent_appointments_query = "SELECT a.*, t.title as treatment_title FROM appointments a LEFT JOIN treatments t ON a.treatment_id = t.id ORDER BY a.date DESC LIMIT 5";
 $recent_appointments = mysqli_query($conn, $recent_appointments_query);
 
 

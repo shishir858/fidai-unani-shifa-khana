@@ -143,9 +143,8 @@ include '../includes/sidebar.php';
                             </td>
                             <td>
                                 <?php 
-                                $img_path = '../../assets/images/treatments/' . $treatment['feature_image'];
-                                if(!empty($treatment['feature_image']) && file_exists($img_path)) : ?>
-                                    <img src="<?php echo SITE_URL . 'assets/images/treatments/' . $treatment['feature_image']; ?>" 
+                                if(!empty($treatment['feature_image'])) : ?>
+                                    <img src="<?php echo '../../assets/images/treatments/' . $treatment['feature_image']; ?>" 
                                          alt="<?php echo htmlspecialchars($treatment['title']); ?>" 
                                          class="package-thumb">
                                 <?php else: ?>

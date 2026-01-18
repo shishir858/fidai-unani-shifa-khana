@@ -1,3 +1,4 @@
+
 <?php 
 require_once 'admin/includes/config.php';
 $slug = isset($_GET['service']) ? mysqli_real_escape_string($conn, $_GET['service']) : '';
@@ -8,8 +9,10 @@ if($slug) {
     $service = mysqli_fetch_assoc($result);
   }
 }
+include 'includes/form-handler.php';
 include 'includes/header.php';
 ?>
+
 
 <!-- Service Details Hero Section -->
 <section class="service-details-hero-section section-bg" style="padding: 64px 0 32px 0; background: linear-gradient(90deg, #e6f2e6 60%, #f8f9fa 100%);">
@@ -23,9 +26,7 @@ include 'includes/header.php';
         <p class="lead" style="color:#1c4307;">
           <?php echo htmlspecialchars($service['short_description']); ?>
         </p>
-        <?php if(!empty($service['doctor_name'])): ?>
         <div class="mb-2"><span class="badge bg-success"><i class="bi bi-person-badge"></i> <?php echo htmlspecialchars($service['doctor_name']); ?></span></div>
-        <?php endif; ?>
       </div>
       <div class="col-md-5 text-center">
         <?php if(!empty($service['feature_image']) && file_exists('assets/images/treatments/' . $service['feature_image'])): ?>
@@ -40,6 +41,8 @@ include 'includes/header.php';
     <?php endif; ?>
   </div>
 </section>
+
+
 
 <?php if($service): ?>
 <!-- Service Details Content Section -->
@@ -107,41 +110,6 @@ include 'includes/header.php';
                     <span class="fw-semibold text-dark"> <?php echo htmlspecialchars($value); ?> </span>
                   </div>
                   <?php endforeach; ?>
-                </div>
-              </div>
-            </div>
-            <?php endif; ?>
-          </div>
-            <?php if(!empty($service['health_tips'])): ?>
-            <div class="col-12">
-              <div class="card border-0 shadow-sm mb-3">
-                <div class="card-body">
-                  <h5 class="fw-bold mb-2" style="color:#1c4307;"><i class="bi bi-info-circle"></i> Health Tips & FAQs</h5>
-                  <div class="accordion" id="faqsAccordion">
-                    <?php 
-                    $faqs = json_decode($service['health_tips'], true);
-                    if(is_array($faqs)):
-                      foreach($faqs as $i => $faq):
-                        if(!empty($faq['question']) && !empty($faq['answer'])):
-                    ?>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="faqHeading<?php echo $i; ?>">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse<?php echo $i; ?>" aria-expanded="false" aria-controls="faqCollapse<?php echo $i; ?>">
-                          <?php echo htmlspecialchars($faq['question']); ?>
-                        </button>
-                      </h2>
-                      <div id="faqCollapse<?php echo $i; ?>" class="accordion-collapse collapse" aria-labelledby="faqHeading<?php echo $i; ?>" data-bs-parent="#faqsAccordion">
-                        <div class="accordion-body text-muted">
-                          <?php echo nl2br(htmlspecialchars($faq['answer'])); ?>
-                        </div>
-                      </div>
-                    </div>
-                    <?php 
-                        endif;
-                      endforeach;
-                    endif;
-                    ?>
-                  </div>
                 </div>
               </div>
             </div>
@@ -225,21 +193,34 @@ include 'includes/header.php';
       <div class="col-lg-4">
         <div class="card shadow-sm border-0 p-4 mb-4">
           <h5 class="fw-bold mb-3" style="color:#1c4307;">Book an Appointment</h5>
-          <a href="appointment.php" class="btn btn-primary w-100" style="background:#d63b3b; border:none;">Book Now</a>
+          <form method="post" action="">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" name="address" placeholder="Enter your address" required>
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Preferred Date</label>
+              <input type="date" class="form-control" id="date" name="date">
+            </div>
+            <div class="mb-3">
+              <label for="treatment" class="form-label">Treatment (Optional)</label>
+              <input type="text" class="form-control" id="treatment" name="treatment" placeholder="E.g. Liver Treatment, Skin Care">
+            </div>
+            <button type="submit" class="btn btn-danger w-100" style="background:#d63b3b; border:none;">Book Appointment</button>
+          </form>
         </div>
-        <?php if(!empty($service['meta_title']) || !empty($service['meta_description']) || !empty($service['meta_keywords'])): ?>
-        <div class="card shadow-sm border-0 p-4 mb-4">
-          <h6 class="fw-bold mb-2" style="color:#d63b3b;">SEO Meta Info</h6>
-          <?php if(!empty($service['meta_title'])): ?><div><b>Meta Title:</b> <?php echo htmlspecialchars($service['meta_title']); ?></div><?php endif; ?>
-          <?php if(!empty($service['meta_description'])): ?><div><b>Meta Description:</b> <?php echo htmlspecialchars($service['meta_description']); ?></div><?php endif; ?>
-          <?php if(!empty($service['meta_keywords'])): ?><div><b>Meta Keywords:</b> <?php echo htmlspecialchars($service['meta_keywords']); ?></div><?php endif; ?>
-        </div>
-        <?php endif; ?>
       </div>
     </div>
   </div>
 </section>
 <?php endif; ?>
-</section>
 
 <?php include 'includes/footer.php'; ?>

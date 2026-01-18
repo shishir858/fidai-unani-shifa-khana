@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle feature image upload
     $feature_image = $treatment['feature_image'];
     if (!empty($_FILES['feature_image']['name'])) {
-        $upload_result = upload_image($_FILES['feature_image'], '../../assets/images/treatments');
+        $upload_result = upload_image($_FILES['feature_image'], 'treatments');
         if ($upload_result['success']) {
             // Delete old image if exists
             if (!empty($treatment['feature_image'])) {
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $feature_image = $upload_result['filename'];
         } else {
-            $errors[] = $upload_result['message'];
+            $errors[] = 'Feature image upload error: ' . $upload_result['message'] . '<br>_FILES error code: ' . $_FILES['feature_image']['error'] . '<br>Size: ' . $_FILES['feature_image']['size'] . ' bytes';
         }
     }
 
@@ -272,17 +272,18 @@ include '../includes/sidebar.php';
                 <div class="mb-3">
                     <label class="form-label">Feature Image</label>
                     <?php 
-                    $img_path = '../../assets/images/treatments/' . $treatment['feature_image'];
-                    if (!empty($treatment['feature_image']) && file_exists($img_path)) : ?>
+                    if (!empty($treatment['feature_image'])) : 
+                        $img_src = '../../assets/images/treatments/' . $treatment['feature_image']; ?>
                         <div class="mb-2">
-                            <img src="<?php echo SITE_URL . 'assets/images/treatments/' . $treatment['feature_image']; ?>" alt="Current Image" class="img-thumbnail" style="max-width: 400px;">
+                            <img src="<?php echo $img_src; ?>" alt="Current Image" class="img-thumbnail" style="max-width: 400px;">
                             <p class="text-muted small mt-1">Current image</p>
+                            <div class="mt-1"><strong>Image URL:</strong> <a href="<?php echo $img_src; ?>" target="_blank"><?php echo $img_src; ?></a></div>
                         </div>
                     <?php else: ?>
-                        <div class="mb-2 text-danger">No image found or file missing.</div>
+                        <div class="mb-2 text-danger">No image found.</div>
                     <?php endif; ?>
                     <input type="file" name="feature_image" id="feature_image" class="form-control" accept="image/*">
-                    <small class="text-muted">Leave empty to keep current image. Recommended: 1200x800px, Max 5MB.</small>
+                    <small class="text-muted">Leave empty to keep current image. Recommended: 1200x800px, Max 100-100kb.</small>
                     <div id="featuredImagePreview" class="mt-2"></div>
                 </div>
                 <div class="mb-3">

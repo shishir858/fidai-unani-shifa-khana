@@ -59,11 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle feature image upload
     $feature_image = '';
     if (!empty($_FILES['feature_image']['name'])) {
-        $upload_result = upload_image($_FILES['feature_image'], '../../assets/images/treatments');
+        $upload_result = upload_image($_FILES['feature_image'], 'treatments');
         if ($upload_result['success']) {
             $feature_image = $upload_result['filename'];
         } else {
-            $errors[] = $upload_result['message'];
+            $errors[] = 'Feature image upload error: ' . $upload_result['message'] . '<br>_FILES error code: ' . $_FILES['feature_image']['error'] . '<br>Size: ' . $_FILES['feature_image']['size'] . ' bytes';
         }
     }
 

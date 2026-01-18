@@ -43,24 +43,25 @@ function upload_image($file, $folder = 'packages') {
     if (!is_dir($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
+    $debug_info = 'Target dir: ' . $target_dir . ' | Writable: ' . (is_writable($target_dir) ? 'yes' : 'no');
     $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
     $target_file = $target_dir . $new_filename;
     $check = getimagesize($file['tmp_name']);
     if($check === false) {
-        return ['success' => false, 'message' => 'File is not an image.'];
+        return ['success' => false, 'message' => 'File is not an image. ' . $debug_info];
     }
     if ($file['size'] > 500000) {
-        return ['success' => false, 'message' => 'File is too large. Max 500KB allowed.'];
+        return ['success' => false, 'message' => 'File is too large. Max 500KB allowed. ' . $debug_info];
     }
     $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     if(!in_array($file_extension, $allowed)) {
-        return ['success' => false, 'message' => 'Only JPG, JPEG, PNG, GIF & WEBP files are allowed.'];
+        return ['success' => false, 'message' => 'Only JPG, JPEG, PNG, GIF & WEBP files are allowed. ' . $debug_info];
     }
     if (move_uploaded_file($file['tmp_name'], $target_file)) {
         return ['success' => true, 'filename' => $new_filename, 'path' => $folder . '/' . $new_filename];
     } else {
-        return ['success' => false, 'message' => 'Error uploading file.'];
+        return ['success' => false, 'message' => 'Error uploading file. ' . $debug_info];
     }
 }
 
