@@ -58,7 +58,7 @@
 			<div class="col-lg-6 order-lg-2 text-center">
 				<div style="display:inline-block;position:relative;">
 					<div style="position:absolute;top:-24px;left:-24px;width:90px;height:90px;background:#d63b3b22;border-radius:50%;z-index:0;"></div>
-					<img src="assets/images/about/1.jpeg" alt="Mission and Vision" class="img-fluid rounded shadow" style="max-height:260px; background:#fff; padding:10px;position:relative;z-index:1;">
+					<img src="assets/images/about/7.png" alt="Mission and Vision" class="img-fluid rounded shadow" style="max-height:260px; background:#fff; padding:10px;position:relative;z-index:1;">
 				</div>
 			</div>
 			<div class="col-lg-6 order-lg-1">

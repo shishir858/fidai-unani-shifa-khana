@@ -4,6 +4,26 @@
 <!-- ======= Unique Modern Hero Section ======= -->
 <section class="modern-hero-section">
    <div class="modern-hero-bg">
+      <!-- Banner Slider (OwlCarousel) -->
+      <div class="modern-hero-slider owl-carousel">
+         <div class="modern-hero-slide">
+            <img src="assets/images/sliders/7.png" alt="Banner 1" class="modern-hero-bg-img" />
+         </div>
+         <div class="modern-hero-slide">
+            <img src="assets/images/sliders/6.png" alt="Banner 2" class="modern-hero-bg-img" />
+         </div>
+         <div class="modern-hero-slide">
+            <img src="assets/images/sliders/8.png" alt="Banner 3" class="modern-hero-bg-img" />
+         </div>
+         <!-- <div class="modern-hero-slide">
+            <img src="assets/images/sliders/4.png" alt="Banner 4" class="modern-hero-bg-img" />
+         </div>
+         <div class="modern-hero-slide">
+            <img src="assets/images/sliders/5.png" alt="Banner 5" class="modern-hero-bg-img" />
+         </div> -->
+      </div>
+      <!-- Overlay -->
+      <div class="modern-hero-bg-overlay"></div>
       <div class="modern-hero-shape shape1"></div>
       <div class="modern-hero-shape shape2"></div>
       <div class="modern-hero-shape shape3"></div>
@@ -21,7 +41,7 @@
          <a href="/appointment/index.php" class="btn btn-danger btn-lg modern-hero-btn mt-2">Book Appointment</a>
       </div>
       <div class="modern-hero-right">
-         <img src="assets/images/about/4.png" alt="Doctor" class="modern-hero-img" />
+         <img src="assets/images/about/6.jpeg" alt="Doctor" class="modern-hero-img" />
       </div>
    </div>
 </section>
@@ -203,7 +223,7 @@
    <div class="container">
       <div class="row align-items-center">
          <div class="col-lg-6 mb-4 mb-lg-0">
-            <img src="assets/images/about/1.jpeg" alt="Our Story" style="width:100%;height:320px;max-width:100%;border-radius:18px;box-shadow:0 8px 32px #bab9b9;object-fit:cover;">
+            <img src="assets/images/about/3.png" alt="Our Story" style="width:100%;height:320px;max-width:100%;border-radius:18px;box-shadow:0 8px 32px #bab9b9;object-fit:cover;">
          </div>
          <div class="col-lg-6">
             <h2 class="mb-3" style="font-weight:800;color:#1c4307;">OUR STORY</h2>

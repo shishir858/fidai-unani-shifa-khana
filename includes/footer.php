@@ -73,7 +73,23 @@
 				992:{items:4}
 			},
 			slideBy:1
-		});
+			});
+
+			// Modern Hero Banner Slider
+			$('.modern-hero-slider').owlCarousel({
+				items: 1,
+				loop: true,
+				autoplay: true,
+				autoplayTimeout: 3500,
+				autoplayHoverPause: false,
+				animateOut: 'fadeOut',
+				animateIn: 'fadeIn',
+				smartSpeed: 900,
+				dots: false,
+				nav: false,
+				mouseDrag: false,
+				touchDrag: false
+			});
 		// Testimonial Carousel
 		$('.testimonial-carousel').owlCarousel({
 			loop:true,
