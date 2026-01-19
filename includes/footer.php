@@ -77,10 +77,10 @@
 	  }
 	.sticky-call-btn {
 		left: 24px;
-		bottom: 80px;
-		background: linear-gradient(135deg, #d63b3b 80%, #ff4d4d 100%);
+		bottom: 30px;
+		background: linear-gradient(135deg, #5cc600 80%, #ff4d4d 100%);
 		color: #fff;
-		border: 2px solid #d63b3b;
+		border: 2px solid #8afb01;
 		box-shadow: 0 4px 16px rgba(214,59,59,0.18);
 		animation: stickyBounce 1.2s infinite alternate, blinkCall 1.1s infinite;
 	}

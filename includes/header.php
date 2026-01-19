@@ -10,18 +10,17 @@
     <!-- Marquee below header -->
     <div class="header-marquee-wrapper">
       <div class="header-marquee custom-marquee" id="custom-marquee" style="padding: 0 20px;">
-        <span class="marquee-item">Important: Free Consultation for Liver Disease</span>
-        <span class="marquee-item">| Category: Unani Treatments</span>
-        <span class="marquee-item">| Category: Herbal Medicines</span>
-        <span class="marquee-item">| Category: Pain Management</span>
-        <span class="marquee-item">| Category: Skin & Hair Care</span>
-        <span class="marquee-item">| Category: Child Health</span>
-        <span class="marquee-item">Important: Free Consultation for Liver Disease</span>
-        <span class="marquee-item">| Category: Unani Treatments</span>
-        <span class="marquee-item">| Category: Herbal Medicines</span>
-        <span class="marquee-item">| Category: Pain Management</span>
-        <span class="marquee-item">| Category: Skin & Hair Care</span>
-        <span class="marquee-item">| Category: Child Health</span>
+        <span class="marquee-item"> &#11088; Important: Free Consultation for Liver Disease &#11088;</span>
+        <span class="marquee-item"> &#11088;Unani Treatments</span>
+        <span class="marquee-item"> &#11088; Herbal Medicines &#11088; </span>
+        <span class="marquee-item"> &#11088; Pain Management &#11088;</span>
+        <span class="marquee-item"> &#11088; Skin & Hair Care &#11088;</span>
+        <span class="marquee-item"> &#11088; Child Health &#11088;</span>
+        <span class="marquee-item"> &#11088; Unani Treatments &#11088;</span>
+        <span class="marquee-item"> &#11088; Herbal Medicines &#11088;</span>
+        <span class="marquee-item"> &#11088; Pain Management &#11088;</span>
+        <span class="marquee-item"> &#11088; Skin & Hair Care &#11088;</span>
+        <span class="marquee-item"> &#11088; Child Health &#11088;</span>
       </div>
     </div>
 
@@ -59,6 +58,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fidai Unani Shifa Khana</title>
     <link href="assets/css/style.css" rel="stylesheet">
+    <!-- Google Material Icons CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- OwlCarousel2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
