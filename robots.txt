@@ -1,0 +1,7 @@
+User-agent: *
+
+Disallow: /blog-panel/
+Disallow: /admin/
+Disallow: /assets/php/
+
+Sitemap: https://fidaiunanishifakhana.com/sitemap.xml

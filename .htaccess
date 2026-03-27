@@ -1,0 +1,30 @@
+RewriteEngine On
+
+# Blog SEO URLs
+# /blog -> blog.php
+RewriteRule ^blog/?$ blog.php [L,QSA]
+# /blog/<slug> -> blog-detail.php?post=<slug>
+RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog-detail.php?post=$1 [L,QSA]
+
+# SEO-friendly service detail URL
+# /services/<slug> -> service-details.php?service=<slug>
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteRule ^services/([a-zA-Z0-9-]+)/?$ service-details.php?service=$1 [L,QSA]
+
+# Sitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^sitemap-pages\.xml$ sitemap-pages.php [L]
+RewriteRule ^sitemap-blog\.xml$ sitemap-blog.php [L]
+
+# Hide .php extension for all files except admin panel
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# Allow query strings (e.g., service-details?treatment=cancer)
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-zA-Z0-9_-]+)\?(.*)$ $1.php?$2 [L]
+
