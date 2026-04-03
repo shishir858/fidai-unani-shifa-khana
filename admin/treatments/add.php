@@ -43,6 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $duration = isset($_POST['duration']) ? mysqli_real_escape_string($conn, trim($_POST['duration'])) : '';
     $side_effects = isset($_POST['side_effects']) ? mysqli_real_escape_string($conn, trim($_POST['side_effects'])) : '';
     $precautions = isset($_POST['precautions']) ? mysqli_real_escape_string($conn, trim($_POST['precautions'])) : '';
+    $features = isset($_POST['features']) ? mysqli_real_escape_string($conn, trim($_POST['features'])) : '';
+    $care_plans = isset($_POST['care_plans']) ? mysqli_real_escape_string($conn, trim($_POST['care_plans'])) : '';
+    $core_values = isset($_POST['core_values']) ? mysqli_real_escape_string($conn, trim($_POST['core_values'])) : '';
+    $faqs_post = isset($_POST['faqs']) && is_array($_POST['faqs']) ? $_POST['faqs'] : [];
+    $health_tips = mysqli_real_escape_string($conn, json_encode($faqs_post, JSON_UNESCAPED_UNICODE));
 
     // Validation
     if (empty($title)) {
@@ -71,9 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $insert_query = "INSERT INTO treatments (
-            title, slug, short_description, full_description, symptoms, causes, `procedure`, medicines, duration, side_effects, precautions, doctor_name, related_treatments, status, feature_image, meta_title, meta_description, meta_keywords, created_at
+            title, slug, short_description, full_description, symptoms, causes, `procedure`, medicines, duration, side_effects, precautions, doctor_name, related_treatments, status, feature_image, meta_title, meta_description, meta_keywords, features, care_plans, core_values, health_tips, created_at
         ) VALUES (
-            '$title', '$slug', '$short_description', '$full_description', '$symptoms', '$causes', '$procedure', '$medicines', '$duration', '$side_effects', '$precautions', '$doctor_name', '$related_treatments', '$status', '$feature_image', '$meta_title', '$meta_description', '$meta_keywords', NOW()
+            '$title', '$slug', '$short_description', '$full_description', '$symptoms', '$causes', '$procedure', '$medicines', '$duration', '$side_effects', '$precautions', '$doctor_name', '$related_treatments', '$status', '$feature_image', '$meta_title', '$meta_description', '$meta_keywords', '$features', '$care_plans', '$core_values', '$health_tips', NOW()
         )";
         if (mysqli_query($conn, $insert_query)) {
             $treatment_id = mysqli_insert_id($conn);

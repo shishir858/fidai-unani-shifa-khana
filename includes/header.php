@@ -82,8 +82,8 @@
       $metaRobots = 'index, follow';
 
       if (!empty($page_title)) $metaTitle = $page_title;
-      if (!empty($page_description)) $metaDescription = $page_description;
       if (!empty($page_desc)) $metaDescription = $page_desc;
+      if (!empty($page_description)) $metaDescription = $page_description;
       if (!empty($page_keywords)) $metaKeywords = $page_keywords;
       if (!empty($page_canonical)) $metaCanonical = $page_canonical;
       if (!empty($page_robots)) $metaRobots = $page_robots;
@@ -93,7 +93,7 @@
     <meta name="keywords" content="<?php echo htmlspecialchars($metaKeywords); ?>">
     <meta name="robots" content="<?php echo htmlspecialchars($metaRobots); ?>">
     <link rel="canonical" href="<?php echo htmlspecialchars($metaCanonical); ?>">
-    <?php $faviconUrl = rtrim(BASE_URL, '/') . '/assets/images/favicon/favicon.PNG?v=1'; ?>
+    <?php $faviconUrl = public_favicon_url(); ?>
     <link rel="icon" href="<?php echo htmlspecialchars($faviconUrl); ?>" type="image/png">
     <link rel="shortcut icon" href="<?php echo htmlspecialchars($faviconUrl); ?>" type="image/png">
     <link rel="apple-touch-icon" href="<?php echo htmlspecialchars($faviconUrl); ?>">
@@ -153,8 +153,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K66H5NKJ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -
-  
+<!-- End Google Tag Manager (noscript) -->
+
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZJ6L2VX"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -186,7 +186,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <header class="main-header desktop-main-header">
       <div class="logo">
         <a href="./">
-          <img src="<?php echo htmlspecialchars($settings['logo'] ?? 'assets/images/logo/logo-light.PNG'); ?>" alt="<?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?>">
+          <img src="<?php echo htmlspecialchars(public_site_logo_url($settings['logo'] ?? '')); ?>" alt="<?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?>">
         </a>
       </div>
       <nav class="nav-menu">
@@ -221,7 +221,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="mobile-logo-btns-section">
       <div class="mobile-logo-btns-inner">
         <div class="mobile-logo-center">
-          <img src="assets/images/logo/logo-light.PNG" alt="Fidai Unani Shifa Khana" style="height:55px; max-width:90%;">
+          <img src="<?php echo htmlspecialchars(public_site_logo_url($settings['logo'] ?? '')); ?>" alt="Fidai Unani Shifa Khana" style="height:55px; max-width:90%;">
         </div>
         <div class="mobile-btns-row">
           <a href="#" class="mobile-intl-btn">International Patients</a>
@@ -236,7 +236,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button class="close-mobile-menu" id="close-mobile-menu" aria-label="Close">&times;</button>
       <div class="mobile-side-menu-content mobile-menu-logo-btns">
         <div class="mobile-menu-logo" style="text-align:center; margin-bottom:18px;">
-          <img src="assets/images/logo/logo-light.png" alt="Fidai Unani Shifa Khana" style="height:55px; max-width:90%;">
+          <img src="<?php echo htmlspecialchars(public_site_logo_url($settings['logo'] ?? '')); ?>" alt="Fidai Unani Shifa Khana" style="height:55px; max-width:90%;">
         </div>
         <nav class="mobile-nav-menu" style="display:flex; flex-direction:column; margin-bottom:18px; gap:10px;">
           <a href="about">About Us</a>
@@ -286,5 +286,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     });
     </script>
-</body>
-</html>

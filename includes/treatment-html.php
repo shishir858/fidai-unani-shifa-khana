@@ -2,6 +2,7 @@
 /**
  * Helpers for treatment rich-text (admin editor + public display).
  */
+
 if (!function_exists('sanitize_treatment_editor_html')) {
     function sanitize_treatment_editor_html($html) {
         if ($html === null || $html === '') {
@@ -17,11 +18,15 @@ if (!function_exists('sanitize_treatment_editor_html')) {
         $html = preg_replace('/javascript\s*:/iu', 'blocked:', $html);
         return trim($html);
     }
+}
 
+if (!function_exists('treatment_editor_textarea_value')) {
     function treatment_editor_textarea_value($html) {
         return str_ireplace('</textarea>', '&lt;/textarea&gt;', (string) $html);
     }
+}
 
+if (!function_exists('format_treatment_body_html')) {
     /** Plain text (no tags) from old records: keep line breaks; rich HTML passes through as-is. */
     function format_treatment_body_html($html) {
         $html = sanitize_treatment_editor_html($html);
@@ -33,8 +38,12 @@ if (!function_exists('sanitize_treatment_editor_html')) {
         }
         return nl2br(htmlspecialchars($html, ENT_QUOTES, 'UTF-8'));
     }
+}
 
+if (!function_exists('format_treatment_short_html')) {
     function format_treatment_short_html($html) {
         return format_treatment_body_html($html);
     }
 }
+
+require_once __DIR__ . '/service-content-split.php';

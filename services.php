@@ -22,30 +22,45 @@ $services = mysqli_query($conn, "SELECT t.*, c.name as category_name FROM treatm
 </section>
 
 <!-- Services List Section -->
-<section class="services-list-section" style="padding: 48px 0 32px 0;">
+<section class="services-list-section services-v2-section">
   <div class="container">
     <div class="row mb-4">
-      <div class="col text-center">
-        <h2 class="fw-bold" style="color:#1c4307;">Specialities & Procedures</h2>
-        <p class="text-muted">Comprehensive care for a wide range of health concerns.</p>
+      <div class="col text-center services-v2-intro">
+        <h2 class="services-v2-heading">Specialities &amp; Procedures</h2>
+        <p class="services-v2-sub">Comprehensive Unani care — explore treatments that match your health goals.</p>
       </div>
     </div>
-    <div class="row g-4 justify-content-center">
+    <div class="row g-4 justify-content-center services-v2-grid">
       <?php if(mysqli_num_rows($services) > 0): ?>
         <?php while($service = mysqli_fetch_assoc($services)): ?>
-          <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 text-center p-4">
-              <div class="mb-3">
+          <?php
+            $excerpt = strip_tags(sanitize_treatment_editor_html($service['short_description'] ?? $service['description'] ?? ''));
+            if (strlen($excerpt) > 140) {
+              $excerpt = substr($excerpt, 0, 137) . '…';
+            }
+          ?>
+          <div class="col-md-6 col-lg-4 d-flex">
+            <article class="service-card-v2 w-100">
+              <div class="service-card-v2__media">
                 <?php if(!empty($service['feature_image']) && file_exists('assets/images/treatments/' . $service['feature_image'])): ?>
-                  <img src="assets/images/treatments/<?php echo htmlspecialchars($service['feature_image']); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" style="height:80px;width:80px;object-fit:cover;border-radius:16px;box-shadow:0 2px 8px #bab9b9;background:#fff;">
+                  <img src="assets/images/treatments/<?php echo htmlspecialchars($service['feature_image']); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" loading="lazy">
                 <?php else: ?>
-                  <span style="display:inline-block;width:80px;height:80px;background:#e6f2e6;border-radius:16px;"><i class="bi bi-activity" style="font-size:2.5rem;color:#bab9b9;line-height:80px;"></i></span>
+                  <div class="service-card-v2__placeholder" aria-hidden="true"><i class="bi bi-heart-pulse"></i></div>
                 <?php endif; ?>
+                <div class="service-card-v2__badge">Unani care</div>
               </div>
-              <h5 class="fw-bold" style="color:#1c4307;"><?php echo htmlspecialchars($service['title']); ?></h5>
-              <p class="text-muted"><?php echo htmlspecialchars(strip_tags(sanitize_treatment_editor_html($service['short_description'] ?? $service['description'] ?? ''))); ?></p>
-              <a href="services/<?php echo urlencode($service['slug']); ?>" class="btn btn-outline-primary mt-2">Learn More</a>
-            </div>
+              <div class="service-card-v2__body">
+                <h3 class="service-card-v2__title"><?php echo htmlspecialchars($service['title']); ?></h3>
+                <?php if ($excerpt !== ''): ?>
+                <p class="service-card-v2__excerpt"><?php echo htmlspecialchars($excerpt); ?></p>
+                <?php endif; ?>
+                <div class="service-card-v2__footer">
+                  <a href="services/<?php echo urlencode($service['slug']); ?>" class="service-card-v2__btn">
+                    View details <i class="bi bi-arrow-right-short"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
           </div>
         <?php endwhile; ?>
       <?php else: ?>

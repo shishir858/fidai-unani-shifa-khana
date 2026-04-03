@@ -10,7 +10,7 @@
 			}
 			?>
 			<div class="footer-section footer-brand">
-					<img src="<?php echo htmlspecialchars($settings['logo'] ?? 'assets/images/logo/logo-light.png'); ?>" alt="<?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?>" class="footer-logo">
+					<img src="<?php echo htmlspecialchars(public_site_logo_url($settings['logo'] ?? '')); ?>" alt="<?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?>" class="footer-logo">
 					<div class="footer-title"><?php echo htmlspecialchars($settings['site_name'] ?? 'Fidai Unani Shifa Khana'); ?></div>
 					<div class="footer-desc"><?php echo htmlspecialchars($settings['footer_about'] ?? 'Your trusted destination for Unani & Herbal healthcare, wellness, and holistic treatments.'); ?></div>
 			</div>

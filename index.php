@@ -612,7 +612,7 @@
          <div class="col-lg-5 text-center">
             <div class="speciality-phone-mockup mx-auto p-0" style="max-width:320px;background:#fff;border-radius:32px;box-shadow:0 8px 32px #bab9b9;overflow:hidden;position:relative;">
                <div style="background:#1c4307;padding:32px 0 24px 0;border-radius:32px 32px 0 0;">
-                  <img src="assets/images/logo/logo-light.PNG" alt="Clinic Logo" style="height:48px;">
+                  <img src="<?php echo htmlspecialchars(public_site_logo_url($settings['logo'] ?? '')); ?>" alt="Clinic Logo" style="height:48px;">
                </div>
                <div style="padding:32px 18px 24px 18px;">
                   <h4 style="color:#d63b3b;font-weight:800;">Looking for an Expert?</h4>

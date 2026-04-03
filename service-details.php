@@ -14,15 +14,18 @@ include 'includes/form-handler.php';
 
 if ($service) {
   $siteName = 'Fidai Unani Shifa Khana';
-  $page_title = ($service['meta_title'] ?? '') ? $service['meta_title'] : ($service['title'] . ' | ' . $siteName);
-  $page_description = ($service['meta_description'] ?? '') ? $service['meta_description'] : '';
-  if (empty($page_description)) {
+  $metaTitleRaw = trim((string) ($service['meta_title'] ?? ''));
+  $page_title = $metaTitleRaw !== '' ? strip_tags($metaTitleRaw) : (($service['title'] ?? '') . ' | ' . $siteName);
+  $metaDescRaw = trim((string) ($service['meta_description'] ?? ''));
+  $page_description = $metaDescRaw !== '' ? strip_tags(sanitize_treatment_editor_html($metaDescRaw)) : '';
+  if ($page_description === '') {
     $page_description = strip_tags(sanitize_treatment_editor_html($service['short_description'] ?? ''));
   }
-  if (empty($page_description)) {
+  if ($page_description === '') {
     $page_description = substr(strip_tags(sanitize_treatment_editor_html($service['full_description'] ?? '')), 0, 160);
   }
-  $page_keywords = ($service['meta_keywords'] ?? '') ? $service['meta_keywords'] : (($service['title'] ?? '') . ', unani treatment, herbal treatment');
+  $metaKwRaw = trim((string) ($service['meta_keywords'] ?? ''));
+  $page_keywords = $metaKwRaw !== '' ? strip_tags($metaKwRaw) : (($service['title'] ?? '') . ', unani treatment, herbal treatment');
   $page_canonical = rtrim(BASE_URL, '/') . '/services/' . ($service['slug'] ?? $slug);
 }
 
@@ -39,10 +42,16 @@ include 'includes/header.php';
         <h1 class="display-5 fw-bold" style="color:#1c4307;">
           <?php echo htmlspecialchars($service['title']); ?>
         </h1>
-        <div class="lead" style="color:#1c4307;">
-          <?php echo format_treatment_short_html($service['short_description'] ?? ''); ?>
-        </div>
-        <div class="mb-2"><span class="badge bg-success"><i class="bi bi-person-badge"></i> <?php echo htmlspecialchars($service['doctor_name']); ?></span></div>
+        <?php if (!empty($service['doctor_name']) || !empty($service['duration'])): ?>
+        <p class="mb-0" style="color:#1c4307; font-size:1rem;">
+          <?php if (!empty($service['doctor_name'])): ?>
+            <span class="me-3"><i class="bi bi-person-badge"></i> <?php echo htmlspecialchars($service['doctor_name']); ?></span>
+          <?php endif; ?>
+          <?php if (!empty($service['duration'])): ?>
+            <span><i class="bi bi-clock-history"></i> <?php echo htmlspecialchars($service['duration']); ?></span>
+          <?php endif; ?>
+        </p>
+        <?php endif; ?>
       </div>
       <div class="col-md-5 text-center">
         <?php if(!empty($service['feature_image']) && file_exists('assets/images/treatments/' . $service['feature_image'])): ?>
@@ -62,8 +71,27 @@ include 'includes/header.php';
 
 <?php if($service): ?>
 <?php
-  $features = array_filter(array_map('trim', explode("\n", $service['features'] ?? '')));
-  $faqCandidate = trim((string)($service['faqs'] ?? ''));
+  $descParts = service_split_rich_content($service['full_description'] ?? '');
+  $serviceFaqs = [];
+  if (!empty($service['health_tips'])) {
+    $faqRaw = json_decode($service['health_tips'], true);
+    if (is_array($faqRaw)) {
+      foreach ($faqRaw as $row) {
+        if (!is_array($row)) {
+          continue;
+        }
+        $fq = trim((string) ($row['question'] ?? ''));
+        $fa = trim((string) ($row['answer'] ?? ''));
+        if ($fq === '' && $fa === '') {
+          continue;
+        }
+        if ($fq === '') {
+          $fq = 'Details';
+        }
+        $serviceFaqs[] = ['question' => $fq, 'answer' => $fa];
+      }
+    }
+  }
 ?>
 
 <!-- Service Details Content Section -->
@@ -94,28 +122,24 @@ include 'includes/header.php';
         </div>
       </div>
 
-      <?php if(!empty($features)): ?>
-      <div class="svc-section">
-        <div class="svc-section-head">
-          <h3 class="svc-h3"><i class="bi bi-stars"></i> Key Features</h3>
-          <div class="svc-muted">Quick points to understand the treatment at a glance.</div>
-        </div>
-        <div class="svc-feature-chips">
-          <?php foreach($features as $f): ?>
-            <span class="svc-feature-chip"><?php echo htmlspecialchars($f); ?></span>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <?php endif; ?>
-
-      <div class="svc-section">
+      <?php if ($descParts['part1'] !== ''): ?>
+      <div class="svc-section svc-section--overview">
         <div class="svc-section-head">
           <h3 class="svc-h3"><i class="bi bi-info-circle"></i> Overview</h3>
         </div>
-        <div class="svc-prose">
-          <?php echo format_treatment_body_html($service['full_description'] ?? ''); ?>
+        <div class="svc-rich-shell">
+          <div class="svc-rich-content<?php echo $descParts['expand_first'] ? ' svc-rich-content--collapsible is-collapsed' : ''; ?>" id="svc-overview-body">
+            <?php echo $descParts['part1']; ?>
+          </div>
+          <?php if ($descParts['expand_first']): ?>
+          <button type="button" class="svc-read-more" data-overview-toggle aria-expanded="false">
+            <span class="when-collapsed">Read more</span>
+            <span class="when-expanded" hidden>Show less</span>
+          </button>
+          <?php endif; ?>
         </div>
       </div>
+      <?php endif; ?>
 
       <div class="svc-section">
         <div class="svc-section-head">
@@ -140,6 +164,16 @@ include 'includes/header.php';
           </div>
         </div>
       </div>
+
+      <?php if ($descParts['part2'] !== ''): ?>
+      <div class="svc-section svc-section--continued">
+        <div class="svc-section-head">
+          <h3 class="svc-h3"><i class="bi bi-file-text"></i> More about this treatment</h3>
+          <div class="svc-muted">Further details from our specialists.</div>
+        </div>
+        <div class="svc-rich-content"><?php echo $descParts['part2']; ?></div>
+      </div>
+      <?php endif; ?>
 
       <div class="svc-grid">
         <?php if(!empty($service['symptoms'])): ?>
@@ -226,6 +260,16 @@ include 'includes/header.php';
           <img src="assets/images/about/doctor-illustration.jpeg" alt="Consultation" loading="lazy">
         </div>
       </div>
+
+      <?php if ($descParts['part3'] !== ''): ?>
+      <div class="svc-section svc-section--deep">
+        <div class="svc-section-head">
+          <h3 class="svc-h3"><i class="bi bi-layers"></i> Additional information</h3>
+          <div class="svc-muted">Extra guidance and context for patients.</div>
+        </div>
+        <div class="svc-rich-content"><?php echo $descParts['part3']; ?></div>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -238,6 +282,20 @@ include 'includes/header.php';
         <div class="svc-panel h-100">
           <h4 class="svc-panel-title"><i class="bi bi-question-circle"></i> FAQs</h4>
           <div class="accordion" id="serviceFaqAccordion">
+            <?php if (!empty($serviceFaqs)): ?>
+              <?php foreach ($serviceFaqs as $fi => $faqRow): ?>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sfq-dyn-h-<?php echo (int) $fi; ?>">
+                <button class="accordion-button<?php echo $fi > 0 ? ' collapsed' : ''; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#sfq-dyn-c-<?php echo (int) $fi; ?>" aria-expanded="<?php echo $fi === 0 ? 'true' : 'false'; ?>" aria-controls="sfq-dyn-c-<?php echo (int) $fi; ?>">
+                  <?php echo htmlspecialchars($faqRow['question']); ?>
+                </button>
+              </h2>
+              <div id="sfq-dyn-c-<?php echo (int) $fi; ?>" class="accordion-collapse collapse<?php echo $fi === 0 ? ' show' : ''; ?>" aria-labelledby="sfq-dyn-h-<?php echo (int) $fi; ?>" data-bs-parent="#serviceFaqAccordion">
+                <div class="accordion-body svc-rich-content"><?php echo format_treatment_body_html($faqRow['answer']); ?></div>
+              </div>
+            </div>
+              <?php endforeach; ?>
+            <?php else: ?>
             <div class="accordion-item">
               <h2 class="accordion-header" id="sfq1">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sfqc1" aria-expanded="true" aria-controls="sfqc1">
@@ -322,6 +380,7 @@ include 'includes/header.php';
                 </div>
               </div>
             </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -356,6 +415,23 @@ include 'includes/header.php';
     </div>
   </div>
 </section>
+<?php endif; ?>
+
+<?php if ($service): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.querySelector('[data-overview-toggle]');
+  var body = document.getElementById('svc-overview-body');
+  if (!btn || !body) return;
+  btn.addEventListener('click', function() {
+    body.classList.toggle('is-collapsed');
+    var collapsed = body.classList.contains('is-collapsed');
+    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    btn.querySelector('.when-collapsed').hidden = !collapsed;
+    btn.querySelector('.when-expanded').hidden = collapsed;
+  });
+});
+</script>
 <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>
